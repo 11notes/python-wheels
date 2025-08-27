@@ -22,6 +22,7 @@
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
       WHEEL_VERSION \
+      GITHUB_TOKEN \
       BUILD_ROOT
   USER root
 
@@ -61,8 +62,7 @@
       --output-fd 3 3>&1 >&2;
 
   # push wheels
-  RUN set -ex; \
-    cd /; \
+  RUN cd /; \
     git clone https://${GITHUB_TOKEN}@github.com/11notes/python-wheels.git &> /dev/null; \
     git config user.name "github-actions[bot]"; \
     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"; \
