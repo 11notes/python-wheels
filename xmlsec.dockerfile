@@ -16,7 +16,7 @@
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: XMLSEC
-  FROM 11notes/python:${PYTHON_VERSION} AS builder
+  FROM 11notes/python:${PYTHON_VERSION}
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
       WHEEL_VERSION \

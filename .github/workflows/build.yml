@@ -76,12 +76,6 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
 
-    services:
-      registry:
-        image: registry:2
-        ports:
-          - 5000:5000
-
     steps:
       # CHECKOUT ALL DEPTHS (ALL TAGS)
       - name: init / checkout
@@ -108,22 +102,29 @@ jobs:
         with:
           context: .
           file: ${{ github.event.inputs.dockerfile }}
-          push: true
           platforms: linux/${{ matrix.platform }}
-          tags: localhost:5000/python/wheel:${{ matrix.python }}
+          tags: wheel:latest
+          outputs: type=docker,dest=${{ runner.temp }}/wheel.${{ matrix.python }}.tar
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
+
+      # SAVE ARTIFACT IN CACHE
+      - name: wheel / cache artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel
+          path: ${{ runner.temp }}/wheel.${{ matrix.python }}.tar
 
 
   # ╔═════════════════════════════════════════════════════╗
   # ║                                                     ║
   # ║                                                     ║
-  # ║                    EXPORT WHEEL                     ║
+  # ║                   EXTRACT WHEEL                     ║
   # ║                                                     ║
   # ║                                                     ║
   # ╚═════════════════════════════════════════════════════╝
-  export:
+  extract:
     needs: build
     runs-on: ${{ matrix.runner }}
     strategy:
@@ -133,27 +134,15 @@ jobs:
     permissions:
       contents: write
 
-    container:
-      image: localhost:5000/python/wheel:${{ matrix.python }}
-      volumes:
-        - ./whl:/export
-
     steps:
-      - name: export / copy to volume
-        run: cp -R /whl/* /export
+      - name: init / retreive artifact cache
+        uses: actions/download-artifact@v4
+        with:
+          name: wheel
+          path: ${{ runner.temp }}
 
-  # ╔═════════════════════════════════════════════════════╗
-  # ║                                                     ║
-  # ║                                                     ║
-  # ║                    RELEASE WHEEL                    ║
-  # ║                                                     ║
-  # ║                                                     ║
-  # ╚═════════════════════════════════════════════════════╝
-  release:
-    needs: export
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: check export
+      - name: extract / wheel
         run: |
-          ls -lah /export
+          docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.tar
+          docker run --rm -v ${PWD}/whl:/dst wheel cp -R /whl/* /dst
+          ls -lah ${PWD}/whl
