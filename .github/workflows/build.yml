@@ -130,7 +130,9 @@ jobs:
   # ║                                                     ║
   # ╚═════════════════════════════════════════════════════╝
   extract:
-    needs: build
+    needs: 
+      - build
+      - matrix
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false

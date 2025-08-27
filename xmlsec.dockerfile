@@ -21,7 +21,6 @@
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
       WHEEL_VERSION \
-      GITHUB_TOKEN \
       BUILD_ROOT
   USER root
 
