@@ -108,9 +108,9 @@ jobs:
         with:
           context: .
           file: ${{ github.event.inputs.dockerfile }}
-          push: false
+          push: true
           platforms: linux/${{ matrix.platform }}
-          cache-to: type=registry,ref=localhost:5000/python/wheel:${{ matrix.python }},mode=max,compression=zstd,force-compression=true
+          tags: localhost:5000/python/wheel:${{ matrix.python }}
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
