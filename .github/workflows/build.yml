@@ -86,7 +86,7 @@ jobs:
       # SETUP ENVIRONMENT
       - name: init / environment
         run: |
-          echo "MATRIX_PLATFORM_SANITIZED=$(echo "${{ matrix.platform }}" | sed 's#/##')" >> "${GITHUB_ENV}"
+          echo "MATRIX_PLATFORM_SANITIZED=$(echo ${{ matrix.platform }} | sed 's#/##')" >> "${GITHUB_ENV}"
 
       # SETUP QEMU
       - name: init / setup qemu
@@ -142,12 +142,19 @@ jobs:
       contents: write
 
     steps:
+      # SETUP ENVIRONMENT
+      - name: init / environment
+        run: |
+          echo "MATRIX_PLATFORM_SANITIZED=$(echo ${{ matrix.platform }} | sed 's#/##')" >> "${GITHUB_ENV}"
+
+      # GET ARTIFACT CACHE
       - name: init / retreive artifact cache
         uses: actions/download-artifact@v4
         with:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}
 
+      # EXTRACT WHEEL
       - name: extract / wheel
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
