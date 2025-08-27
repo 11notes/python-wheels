@@ -6,8 +6,7 @@
       WHEEL_VERSION=0
 
 # :: APP SPECIFIC
-  ARG BUILD_ROOT=/python-xmlsec \
-      BUILD_NAME=xmlsec
+  ARG BUILD_ROOT=/python-xmlsec
 
 # :: FOREIGN IMAGES
   FROM 11notes/util:bin AS util-bin

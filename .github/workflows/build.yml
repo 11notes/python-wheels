@@ -15,11 +15,11 @@ on:
         required: false
         default: "3.12"
 
-      dockerfile:
+      wheel:
         description: 'name of dockerfile to use for build'
         type: string
         required: true
-        default: "xmlsec.dockerfile"
+        default: "xmlsec"
 
       version:
         description: 'version of wheel to build'
@@ -105,7 +105,7 @@ jobs:
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
-          file: ${{ github.event.inputs.dockerfile }}
+          file: ${{ github.event.inputs.wheel }}.dockerfile
           platforms: linux/${{ matrix.platform }}
           tags: wheel
           outputs: type=docker,dest=${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
@@ -162,4 +162,7 @@ jobs:
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel
-          ls -lah ./whl
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }} (python ${{ matrix.python }}@${{ matrix.platform }})"
