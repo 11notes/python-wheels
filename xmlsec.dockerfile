@@ -69,6 +69,5 @@
 # :: HEADER
   FROM alpine
   COPY --from=build /.dist /.dist
-  VOLUME ["/.dist"]
   ENTRYPOINT ["/bin/ls"]
   CMD ["-lah"]
