@@ -71,4 +71,4 @@
   FROM alpine
   COPY --from=build /.dist /
   ENTRYPOINT ["/bin/cp"]
-  CMD ["cp",  "-R", "/.dist/*", "/whl"]
+  CMD ["-R", "/.dist/*", "/whl"]
