@@ -161,5 +161,5 @@ jobs:
       - name: extract / wheel
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
-          docker run --rm -v ./whl:/whl --entrypoint="/bin/ash" wheel cp -R /.dist/* /whl
+          docker run --rm -v ./whl:/whl wheel
           ls -lah ./whl
