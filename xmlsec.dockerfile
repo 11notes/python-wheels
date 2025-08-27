@@ -61,7 +61,7 @@
   # push wheels
   RUN set -ex; \
     mkdir -p /dst; \
-    mv ${BUILD_ROOT}/.dist /;
+    mv ${BUILD_ROOT}/.dist /.dist;
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
