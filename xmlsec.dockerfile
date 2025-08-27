@@ -17,7 +17,7 @@
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: XMLSEC
-  FROM 11notes/python:${PYTHON_VERSION}
+  FROM 11notes/python:${PYTHON_VERSION} AS build
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
       WHEEL_VERSION \
@@ -63,3 +63,10 @@
   RUN set -ex; \
     mkdir -p /dst; \
     mv ${BUILD_ROOT}/.dist /;
+
+# ╔═════════════════════════════════════════════════════╗
+# ║                       IMAGE                         ║
+# ╚═════════════════════════════════════════════════════╝
+# :: HEADER
+  FROM alpine
+  COPY --from=build /.dist /
