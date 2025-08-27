@@ -61,13 +61,14 @@
   # push wheels
   RUN set -ex; \
     mkdir -p /dst; \
-    mv ${BUILD_ROOT}/.dist /.dist;
+    mv ${BUILD_ROOT}/.dist /;
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: HEADER
   FROM alpine
-  COPY --from=build /.dist /
+  COPY --from=build /.dist /.dist
+  RUN ls -lah /.dist/*;
   ENTRYPOINT ["/bin/cp"]
   CMD ["-R", "/.dist/*", "/whl"]
