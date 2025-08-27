@@ -16,7 +16,7 @@ on:
         default: "3.12"
 
       wheel:
-        description: 'name of dockerfile to use for build'
+        description: 'name of wheel to use for build'
         type: string
         required: true
         default: "xmlsec"
