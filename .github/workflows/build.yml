@@ -7,13 +7,13 @@ on:
         description: 'list of platforms to build for'
         type: string
         required: false
-        default: "amd64"
+        default: "amd64,arm64,arm/v7"
 
       python:
         description: 'list of python versions MAJOR.MINOR to build for'
         type: string
         required: false
-        default: "3.12"
+        default: "3.12,3.13"
 
       dockerfile:
         description: 'name of dockerfile to use for build'
@@ -76,6 +76,14 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
 
+    timeout-minutes: 1440
+
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+
     steps:
       # CHECKOUT ALL DEPTHS (ALL TAGS)
       - name: init / checkout
@@ -103,46 +111,9 @@ jobs:
           context: .
           file: ${{ github.event.inputs.dockerfile }}
           platforms: linux/${{ matrix.platform }}
-          tags: wheel:latest
-          outputs: type=docker,dest=${{ runner.temp }}/wheel.${{ matrix.python }}.tar
+          tags: localhost:5000/python/wheel:${{ matrix.python }}
+          push: true
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
-
-      # SAVE ARTIFACT IN CACHE
-      - name: wheel / cache artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheel
-          path: ${{ runner.temp }}/wheel.${{ matrix.python }}.tar
-
-
-  # ╔═════════════════════════════════════════════════════╗
-  # ║                                                     ║
-  # ║                                                     ║
-  # ║                   EXTRACT WHEEL                     ║
-  # ║                                                     ║
-  # ║                                                     ║
-  # ╚═════════════════════════════════════════════════════╝
-  extract:
-    needs: build
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: init / retreive artifact cache
-        uses: actions/download-artifact@v4
-        with:
-          name: wheel
-          path: ${{ runner.temp }}
-
-      - name: extract / wheel
-        run: |
-          docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.tar
-          docker run --rm -v ${PWD}/whl:/dst wheel cp -R /whl/* /dst
-          ls -lah ${PWD}/whl
+            GITHUB_TOKEN:${{ secrets.REPOSITORY_TOKEN }}
