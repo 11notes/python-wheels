@@ -27,6 +27,7 @@
   RUN set -ex; \
     apk --no-cache --update add \
       git \
+      python3-dev \
       py3-pkgconfig \
       py3-setuptools \
       py3-maturin \
