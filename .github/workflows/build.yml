@@ -113,8 +113,8 @@ jobs:
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
 
-      # SAVE ARTIFACT IN CACHE
-      - name: wheel / cache artifact
+      # SAVE IMAGE IN ARTIFACT CACHE
+      - name: artifact / save image
         uses: actions/upload-artifact@v4
         with:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
@@ -141,17 +141,13 @@ jobs:
       contents: write
 
     steps:
-      # CHECKOUT REPO
-      - name: init / checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-
       # SETUP ENVIRONMENT
       - name: init / environment
         run: |
           echo "MATRIX_PLATFORM_SANITIZED=$(echo ${{ matrix.platform }} | sed 's#/##')" >> "${GITHUB_ENV}"
 
-      # GET ARTIFACT CACHE
-      - name: init / retreive artifact cache
+      # GET IMAGE FROM ARTIFACT CACHE
+      - name: artifact / load image
         uses: actions/download-artifact@v4
         with:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
@@ -160,5 +156,6 @@ jobs:
       # EXTRACT WHEEL
       - name: extract / wheel
         run: |
+          mkdir -p ./whl
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel

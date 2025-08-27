@@ -68,6 +68,6 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: HEADER
   FROM alpine
-  COPY --from=build /.dist /.dist
-  ENTRYPOINT ["/bin/ls"]
-  CMD ["-lah", "/.dist"]
+  COPY --from=build --chown=1001:118 /.dist /.dist
+  ENTRYPOINT ["/bin/cp"]
+  CMD ["-R", "/.dist/*", "/whl"]
