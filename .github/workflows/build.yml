@@ -145,7 +145,7 @@ jobs:
       # CHECKOUT REPO
       - name: init / checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        
+
       # SETUP ENVIRONMENT
       - name: init / environment
         run: |
@@ -161,7 +161,6 @@ jobs:
       # EXTRACT WHEEL
       - name: extract / wheel
         run: |
-          mkdir -p ./whl
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel
           git config user.name "github-actions[bot]"
