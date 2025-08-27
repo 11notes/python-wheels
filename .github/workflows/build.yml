@@ -162,8 +162,3 @@ jobs:
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }} (python ${{ matrix.python }}@${{ matrix.platform }})"
-          git push

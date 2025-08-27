@@ -70,5 +70,7 @@
   FROM alpine
   COPY --from=build /.dist /.dist
   RUN ls -lah /.dist/*;
-  ENTRYPOINT ["/bin/cp"]
-  CMD ["-R", "/.dist/*", "/whl"]
+  ENTRYPOINT ["/bin/ls"]
+  CMD ["-lah", "/*"]
+  #ENTRYPOINT ["/bin/cp"]
+  #CMD ["-R", "/.dist/*", "/whl"]
