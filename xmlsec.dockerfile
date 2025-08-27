@@ -70,4 +70,4 @@
   FROM alpine
   COPY --from=build --chown=1001:118 /.dist /.dist
   ENTRYPOINT ["/bin/cp"]
-  CMD ["-R", "/.dist/*", "/whl"]
+  CMD ["-af", "/.dist/.", "/whl"]
