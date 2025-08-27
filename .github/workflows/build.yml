@@ -74,6 +74,12 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
 
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+
     steps:
       # CHECKOUT ALL DEPTHS (ALL TAGS)
       - name: init / checkout
@@ -98,7 +104,7 @@ jobs:
       - name: wheel / build
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
-          context: ./build
+          context: .
           file: ${{ github.event.inputs.dockerfile }}
           push: false
           platforms: linux/${{ matrix.platform }}
@@ -122,10 +128,13 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
 
+    permissions:
+      contents: write
+
     container:
       image: localhost:5000/python/wheel:${{ matrix.python }}
       volumes:
-        - ./export:/export
+        - ./whl:/export
 
     steps:
       - name: export / copy to volume
