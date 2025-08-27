@@ -57,8 +57,3 @@
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2;
-
-  # output wheel
-  RUN set -ex; \
-    mkdir -p /whl; \
-    cp -R ${BUILD_ROOT}/.dist/* /whl;
