@@ -1,0 +1,148 @@
+name: build
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'list of platforms to build for'
+        type: string
+        required: false
+        default: "amd64"
+
+      python:
+        description: 'list of python versions MAJOR.MINOR to build for'
+        type: string
+        required: false
+        default: "3.12"
+
+      dockerfile:
+        description: 'name of dockerfile to use for build'
+        type: string
+        required: true
+
+      version:
+        description: 'version of wheel to build'
+        type: string
+        required: true
+
+jobs:
+  # ╔═════════════════════════════════════════════════════╗
+  # ║                                                     ║
+  # ║                                                     ║
+  # ║               CREATE PLATFORM MATRIX                ║
+  # ║                                                     ║
+  # ║                                                     ║
+  # ╚═════════════════════════════════════════════════════╝
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      stringify: ${{ steps.setup-matrix.outputs.stringify }}
+
+    steps:
+      - name: matrix / setup list
+        id: setup-matrix
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const platforms = "${{ github.event.inputs.platform }}".split(",");
+            const pythons = "${{ github.event.inputs.python }}".split(",");
+            const matrix = {include:[]};
+            for(const platform of platforms){
+              for(const python of pythons){
+                switch(platform){
+                  case "amd64": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04"}); break;
+                  case "arm64": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
+                  case "arm/v7": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
+                }
+              }
+            }
+            const stringify = JSON.stringify(matrix);
+            core.setOutput('stringify', stringify);
+            core.info(stringify);
+
+  # ╔═════════════════════════════════════════════════════╗
+  # ║                                                     ║
+  # ║                                                     ║
+  # ║                    BUILD WHEEL                      ║
+  # ║                                                     ║
+  # ║                                                     ║
+  # ╚═════════════════════════════════════════════════════╝
+  build:
+    needs: matrix
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
+
+    steps:
+      # CHECKOUT ALL DEPTHS (ALL TAGS)
+      - name: init / checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.ref_name }}
+
+      # SETUP QEMU
+      - name: init / setup qemu
+        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
+        with:
+          image: tonistiigi/binfmt
+          cache-image: false
+
+      # SETUP BUILDX BUILDER WITH USING LOCAL REGISTRY TO STORE IMAGE
+      - name: init / setup buildx
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+        with:
+          driver-opts: network=host
+
+      # BUILD WHEEL INSIDE CONTAINER
+      - name: wheel / build
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        with:
+          context: ./build
+          file: ${{ github.event.inputs.dockerfile }}
+          push: false
+          platforms: linux/${{ matrix.platform }}
+          cache-to: type=registry,ref=localhost:5000/python/wheel:${{ matrix.python }},mode=max,compression=zstd,force-compression=true
+          build-args: |
+            PYTHON_VERSION=${{ matrix.python }}
+            WHEEL_VERSION=${{ github.event.inputs.version }}
+
+
+  # ╔═════════════════════════════════════════════════════╗
+  # ║                                                     ║
+  # ║                                                     ║
+  # ║                    EXPORT WHEEL                     ║
+  # ║                                                     ║
+  # ║                                                     ║
+  # ╚═════════════════════════════════════════════════════╝
+  export:
+    needs: build
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
+
+    container:
+      image: localhost:5000/python/wheel:${{ matrix.python }}
+      volumes:
+        - ./export:/export
+
+    steps:
+      - name: export / copy to volume
+        run: cp -R /whl/* /export
+
+  # ╔═════════════════════════════════════════════════════╗
+  # ║                                                     ║
+  # ║                                                     ║
+  # ║                    RELEASE WHEEL                    ║
+  # ║                                                     ║
+  # ║                                                     ║
+  # ╚═════════════════════════════════════════════════════╝
+  release:
+    needs: export
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: check export
+        run: |
+          ls -lah /export
