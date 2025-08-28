@@ -154,6 +154,10 @@ jobs:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}
 
+      # CHECKOUT REPO
+      - name: git / checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
       # EXTRACT WHEEL
       - name: extract / wheel
         run: |
@@ -161,7 +165,7 @@ jobs:
           docker run --rm -v ./whl:/whl wheel
 
       # GIT PUSH
-      - name: extract / push
+      - name: git / push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
