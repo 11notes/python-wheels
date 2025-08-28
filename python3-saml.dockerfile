@@ -39,6 +39,11 @@
       py3-gpep517 \
       py3-wheel;
 
+  # add build requirements wheel specific
+  RUN set -ex; \
+    apk --no-cache --update add \
+      poetry;
+
   # get source of package
   RUN set -ex; \
     eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
