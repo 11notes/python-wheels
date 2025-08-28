@@ -31,6 +31,7 @@
   RUN set -ex; \
     apk --no-cache --update add \
       git \
+      cargo \
       python3-dev \
       py3-pkgconfig \
       py3-setuptools \
