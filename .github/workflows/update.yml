@@ -1,5 +1,5 @@
 name: update
-run-name: ${{ inputs.wheel }}
+run-name: update ${{ inputs.wheel }}
 
 on:
   workflow_dispatch:
