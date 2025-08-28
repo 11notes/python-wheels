@@ -159,18 +159,6 @@ jobs:
           docker load --input ${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ${{ runner.temp }}/whl:/whl wheel
 
-      # FIX SEMVER ISSUES
-      - name: extract / fix semver
-        run: |
-          cd ${{ runner.temp }}/whl/
-          for WHL in *; do
-            if echo "${WHL}" | grep -q "0.0.0"; then
-              WHL_NEW=$(echo "${WHL}" | sed 's/0.0.0/'${{ github.event.inputs.version }}'/')
-              echo "renaming ${WHL} to ${WHL_NEW}"
-              mv ${WHL} ${WHL_NEW}
-            fi
-          done
-
       # SAVE WHEEL IN ARTIFACT
       - name: artifact / save wheel
         uses: actions/upload-artifact@v4
