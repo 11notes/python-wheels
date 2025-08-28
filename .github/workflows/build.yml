@@ -154,15 +154,15 @@ jobs:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}
 
+      # CHECKOUT REPO
+      - name: init / checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
       # EXTRACT WHEEL
       - name: extract / wheel
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel
-
-      # CHECKOUT REPO
-      - name: init / checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       # EXTRACT WHEEL
       - name: extract / push
