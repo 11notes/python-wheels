@@ -1,0 +1,32 @@
+name: update
+run-name: ${{ inputs.wheel }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      wheel:
+        description: 'name of wheel to use for build'
+        type: string
+        required: true
+
+      version:
+        description: 'version of wheel to build'
+        type: string
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: release / get
+        run: |
+          echo "RELEASE=$(curl -s https://api.github.com/repos/11notes/python-wheels/releases/tags/${{ inputs.wheel }}-${{ inputs.version }} | jq -r '.id')" >> "${GITHUB_ENV}"
+
+      - name: call / build.yml
+        if: env.RELEASE == 'null'
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          wait-for-completion: false
+          workflow: build.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "wheel":"${{ inputs.wheel }}", "version":"${{ inputs.version }}" }'

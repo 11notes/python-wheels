@@ -1,4 +1,5 @@
 name: build
+run-name: ${{ inputs.wheel }}
 
 on:
   workflow_dispatch:

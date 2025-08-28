@@ -10,17 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: xmlsec / get latest version
+      - name: udpate / get latest version
         run: |
-          LATEST=$(curl -s https://api.github.com/repos/xmlsec/python-xmlsec/releases/latest | jq -r '.tag_name' | sed 's/v//')
-          echo "RELEASE=$(curl -s https://api.github.com/repos/11notes/python-wheels/releases/tags/xmlsec-${LATEST} | jq -r '.id')" >> "${GITHUB_ENV}"
-          echo "LATEST=${LATEST}" >> "${GITHUB_ENV}"
+          echo "LATEST=$(curl -s https://api.github.com/repos/xmlsec/python-xmlsec/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
 
-      - name: call / build.yml
-        if: env.RELEASE == 'null'
+      - name: udpate / call update workflow
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
           wait-for-completion: false
-          workflow: build.yml
+          workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
           inputs: '{ "wheel":"xmlsec", "version":"${{ env.LATEST }}" }'
