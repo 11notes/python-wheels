@@ -25,6 +25,7 @@
       WHEEL_VERSION \
       BUILD_ROOT \
       BUILD_SRC
+  ENV CFLAGS=-flto=auto
   USER root
 
   # add build requirements global
@@ -48,6 +49,7 @@
     cd ${BUILD_ROOT}; \
     gpep517 build-wheel \
       --wheel-dir .dist \
+      --config-json '{"--build-option": ["--with-cython"]}' \
       --output-fd 3 3>&1 >&2;
 
   # push wheels
