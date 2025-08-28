@@ -1,4 +1,4 @@
-name: html
+name: index
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ jobs:
   # ║                                                     ║
   # ║                                                     ║
   # ╚═════════════════════════════════════════════════════╝
-  html:
+  index:
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,8 +24,9 @@ jobs:
 
       # CREATE INDEX
       - name: html / index
+        continue-on-error: true
         run: |
-          echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python</h1>" > ./docs/index.html
+          echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python on alpine linux</h1>" > ./docs/index.html
           for WHL in ./whl/*; do
             NAME=$(echo "${WHL}" | sed "s#./whl/##")
             if [ -f "${WHL}/${NAME}.html" ]; then
