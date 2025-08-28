@@ -17,7 +17,7 @@
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
-# :: XMLSEC
+# :: WHEEL
   FROM 11notes/python:${PYTHON_VERSION} AS build
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
