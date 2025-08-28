@@ -54,7 +54,7 @@ jobs:
                 switch(platform){
                   case "amd64": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04"}); break;
                   case "arm64": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
-                  case "arm/v7": matrix.inclusde.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
+                  case "arm/v7": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
                 }
               }
             }
@@ -154,21 +154,26 @@ jobs:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}
 
-      # CHECKOUT REPO
-      - name: git / checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      # SAVE WHEEL IN ARTIFACT
+      - name: artifact / load wheels
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels
+          path: ${{ runner.temp }}/whl
 
-      # EXTRACT WHEEL
+      # EXTRACT WHEEL FROM CONTAINER IMAGE
       - name: extract / wheel
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
-          docker run --rm -v ./whl:/whl wheel
+          docker run --rm -v ${{ runner.temp }}/whl:/whl wheel
+          ls -lah ${{ runner.temp }}/whl
 
-      # GIT PUSH
-      - name: git / push
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }} (python ${{ matrix.python }}@${{ matrix.platform }})"
-          git push
+      # SAVE WHEEL IN ARTIFACT
+      - name: artifact / save wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels
+          path: ${{ runner.temp }}/whl
+          retention-days: 1
+          overwrite: true
