@@ -240,14 +240,8 @@ jobs:
 
       # CREATE INDEX
       - name: html / index
-        run: |
-          echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python</h1>" > ./index.html
-          for WHL in ./whl/*; do
-            if [ -f "./whl/${WHL}/${WHL}.html" ]; then
-              cat "./whl/${WHL}/${WHL}.html" >> ./index.html
-            fi
-          done
-          echo "</body></html>" >> ./index.html
-          git add ./index.html
-          git commit -m "chore: update index.html"
-          git push
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          wait-for-completion: false
+          workflow: index.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"

@@ -1,0 +1,37 @@
+name: html
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # ╔═════════════════════════════════════════════════════╗
+  # ║                                                     ║
+  # ║                                                     ║
+  # ║                    CREATE HTML                      ║
+  # ║                                                     ║
+  # ║                                                     ║
+  # ╚═════════════════════════════════════════════════════╝
+  html:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      # CHECKOUT REPO
+      - name: init / checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      # CREATE INDEX
+      - name: html / index
+        run: |
+          echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python</h1>" > ./docs/index.html
+          for WHL in ./whl/*; do
+            if [ -f "./whl/${WHL}/${WHL}.html" ]; then
+              cat "./whl/${WHL}/${WHL}.html" >> ./docs/index.html
+            fi
+          done
+          echo "</body></html>" >> ./docs/index.html
+          git add ./docs/index.html
+          git commit -m "chore: update index.html"
+          git push
