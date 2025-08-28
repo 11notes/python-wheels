@@ -28,10 +28,13 @@ jobs:
           echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python</h1>" > ./docs/index.html
           for WHL in ./whl/*; do
             if [ -f "./whl/${WHL}/${WHL}.html" ]; then
+              echo "adding ${WHL} links ..."
               cat "./whl/${WHL}/${WHL}.html" >> ./docs/index.html
             fi
           done
           echo "</body></html>" >> ./docs/index.html
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ./docs/index.html
           git commit -m "chore: update index.html"
           git push
