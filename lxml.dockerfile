@@ -48,7 +48,7 @@
 
   # get source of package
   RUN set -ex; \
-    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
+    eleven git clone ${BUILD_SRC} lxml-${WHEEL_VERSION};
 
   # build wheels
   RUN set -ex; \
