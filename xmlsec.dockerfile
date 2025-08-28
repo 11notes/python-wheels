@@ -32,6 +32,7 @@
     apk --no-cache --update add \
       git \
       cargo \
+      cython \
       python3-dev \
       py3-pkgconfig \
       py3-setuptools \
@@ -42,14 +43,8 @@
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
-      build-base \
-      libressl \
-      libffi-dev \
-      libressl-dev \
-      libxslt-dev \
       libxml2-dev \
-      xmlsec-dev \
-      xmlsec \
+	    xmlsec-dev \
       py3-lxml;
 
   # get source of package

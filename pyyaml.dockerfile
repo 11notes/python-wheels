@@ -32,6 +32,7 @@
     apk --no-cache --update add \
       git \
       cargo \
+      cython \
       python3-dev \
       py3-pkgconfig \
       py3-setuptools \
