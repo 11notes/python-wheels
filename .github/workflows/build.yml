@@ -54,11 +54,10 @@ jobs:
                 switch(platform){
                   case "amd64": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04"}); break;
                   case "arm64": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
-                  case "arm/v7": matrix.include.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
+                  case "arm/v7": matrix.inclusde.push({python:python, platform:platform, runner:"ubuntu-24.04-arm"}); break;
                 }
               }
             }
-            matrix.include.push({last:true, runner:"ubuntu-24.04"});
             const stringify = JSON.stringify(matrix);
             core.setOutput('stringify', stringify);
 
@@ -137,6 +136,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
+      max-parallel: 1
 
     permissions:
       contents: write
@@ -159,3 +159,12 @@ jobs:
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel
+
+      # GIT PUSH
+      - name: extract / push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }} (python ${{ matrix.python }}@${{ matrix.platform }})"
+          git push
