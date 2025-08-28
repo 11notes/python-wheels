@@ -158,6 +158,18 @@ jobs:
           docker load --input ${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ${{ runner.temp }}/whl:/whl wheel
 
+      # FIX SEMVER ISSUES
+      - name: extract / fix semver
+        run: |
+          cd ${{ runner.temp }}/whl/
+          for WHL in *; do
+            if echo "${WHL}" | grep -q "0.0.0"; then
+              WHL_NEW=$(echo "${WHL}" | sed 's/0.0.0/'${{ github.event.inputs.version }}'/')
+              echo "renaming ${WHL} to ${WHL_NEW}"
+              mv ${WHL} ${WHL_NEW}
+            fi
+          done
+
       # SAVE WHEEL IN ARTIFACT
       - name: artifact / save wheel
         uses: actions/upload-artifact@v4
@@ -190,27 +202,15 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
-          name: ${{ github.event.inputs.wheel }}.whl
           path: ${{ runner.temp }}/whl
-
-      # FIX SEMVER ISSUES
-      - name: wheel / fix
-        run: |
-          cd ${{ runner.temp }}/whl/
-          for WHL in *; do
-            if echo "${WHL}" | grep -q "0.0.0"; then
-              WHL_NEW=$(echo "${WHL}" | sed 's/0.0.0/'${{ github.event.inputs.version }}'/')
-              echo "renaming ${WHL} to ${WHL_NEW}"
-              mv ${WHL} ${WHL_NEW}
-            fi
-          done
+          pattern: ${{ github.event.inputs.wheel }}.whl*
+          merge-multiple: true
 
       # GIT PUSH ALL WHEELS AT ONCE
       - name: git / push
         run: |
           mkdir -p ./whl/${{ github.event.inputs.wheel }}
           cp -af ${{ runner.temp }}/whl/. ./whl/${{ github.event.inputs.wheel }}
-          ls -lah ./whl
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
@@ -226,8 +226,8 @@ jobs:
           files: |
             ./whl/${{ github.event.inputs.wheel }}/*
 
-      # CREATE LINKS
-      - name: html / block
+      # CREATE WHEEL LINKS
+      - name: html / wheel
         run: |
           cd ./whl/${{ github.event.inputs.wheel }}
           echo "" > ./${{ github.event.inputs.wheel }}.html
