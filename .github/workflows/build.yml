@@ -58,9 +58,9 @@ jobs:
                 }
               }
             }
+            matrix.include.push({last:true, runner:"ubuntu-24.04"});
             const stringify = JSON.stringify(matrix);
             core.setOutput('stringify', stringify);
-            core.info(stringify);
 
   # ╔═════════════════════════════════════════════════════╗
   # ║                                                     ║
@@ -154,21 +154,8 @@ jobs:
           name: wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}
 
-      # CHECKOUT REPO
-      - name: init / checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-
       # EXTRACT WHEEL
       - name: extract / wheel
         run: |
           docker load --input ${{ runner.temp }}/wheel.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ./whl:/whl wheel
-
-      # EXTRACT WHEEL
-      - name: extract / push
-        run: |  
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }} (python ${{ matrix.python }}@${{ matrix.platform }})"
-          git push
