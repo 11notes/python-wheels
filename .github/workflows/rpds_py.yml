@@ -1,0 +1,23 @@
+name: rpds_py
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  rpds_py:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: udpate / get latest version
+        run: |
+          echo "LATEST=$(curl -s https://api.github.com/repos/crate-py/rpds/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
+
+      - name: udpate / call update workflow
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          wait-for-completion: false
+          workflow: update.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "wheel":"rpds_py", "version":"${{ env.LATEST }}" }'
