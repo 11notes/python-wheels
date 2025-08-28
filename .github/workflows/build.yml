@@ -134,7 +134,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
-      max-parallel: 1
 
     permissions:
       contents: write
@@ -153,14 +152,6 @@ jobs:
           name: ${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}
 
-      # SAVE WHEEL IN ARTIFACT
-      - name: artifact / load wheels
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ github.event.inputs.wheel }}.whl
-          path: ${{ runner.temp }}/whl
-
       # EXTRACT WHEEL FROM CONTAINER IMAGE
       - name: extract / wheel
         run: |
@@ -171,10 +162,9 @@ jobs:
       - name: artifact / save wheel
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.wheel }}.whl
+          name: ${{ github.event.inputs.wheel }}.whl.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
           path: ${{ runner.temp }}/whl
           retention-days: 1
-          overwrite: true
 
   # ╔═════════════════════════════════════════════════════╗
   # ║                                                     ║
