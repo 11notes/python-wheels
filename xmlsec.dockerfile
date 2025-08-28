@@ -41,7 +41,6 @@
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
-      yq \
       build-base \
       libressl \
       libffi-dev \
@@ -59,11 +58,6 @@
   # build wheels
   RUN set -ex; \
     cd ${BUILD_ROOT}; \
-    if [ $(yq -oj '.' pyproject.toml | jq -r '.project') == "null" ]; then \
-      echo "[project]" >> ./pyproject.toml; \
-      echo "name = '${WHEEL_NAME}'" >> ./pyproject.toml; \
-      echo "version = '${WHEEL_VERSION}'" >> ./pyproject.toml; \
-    fi; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2;

@@ -7,13 +7,13 @@ on:
         description: 'list of platforms to build for'
         type: string
         required: false
-        default: "amd64,arm64"
+        default: "amd64,arm64,arm/v7"
 
       python:
         description: 'list of python versions MAJOR.MINOR to build for'
         type: string
         required: false
-        default: "3.12"
+        default: "3.13,3.12"
 
       wheel:
         description: 'name of wheel to use for build'
