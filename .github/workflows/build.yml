@@ -168,7 +168,6 @@ jobs:
         run: |
           docker load --input ${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ${{ runner.temp }}/whl:/whl wheel
-          ls -lah ${{ runner.temp }}/whl
 
       # SAVE WHEEL IN ARTIFACT
       - name: artifact / save wheel
@@ -209,10 +208,20 @@ jobs:
       # GIT PUSH ALL WHEELS AT ONCE
       - name: git / push
         run: |
-          cp -af ${{ runner.temp }}/whl/. ./whl
+          mkdir -p ./whl/${{ github.event.inputs.wheel }}
+          cp -af ${{ runner.temp }}/whl/. ./whl/${{ github.event.inputs.wheel }}
           ls -lah ./whl
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}"
           git push
+
+      # CREATE RELEASE FOR WHEELS
+      - name: git / release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}
+          name: ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}
+          files: |
+            ./whl/${{ github.event.inputs.wheel }}/*
