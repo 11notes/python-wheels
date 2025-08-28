@@ -39,6 +39,12 @@
       py3-gpep517 \
       py3-wheel;
 
+  # add build requirements wheel specific
+  RUN set -ex; \
+    apk --no-cache --update add \
+      py3-cffi \
+      openssl-dev;
+
   # get source of package
   RUN set -ex; \
     eleven git clone ${BUILD_SRC} ${WHEEL_VERSION};
