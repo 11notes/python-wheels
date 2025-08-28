@@ -3,10 +3,12 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: GLOBAL
   ARG PYTHON_VERSION=0 \
+      WHEEL_NAME="" \
       WHEEL_VERSION=0
 
 # :: APP SPECIFIC
-  ARG BUILD_ROOT=/python-xmlsec
+  ARG BUILD_ROOT=/python-xmlsec \
+      BUILD_SRC=xmlsec/python-xmlsec.git
 
 # :: FOREIGN IMAGES
   FROM 11notes/util:bin AS util-bin
@@ -19,8 +21,10 @@
   FROM 11notes/python:${PYTHON_VERSION} AS build
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
+      WHEEL_NAME \
       WHEEL_VERSION \
-      BUILD_ROOT
+      BUILD_ROOT \
+      BUILD_SRC
   USER root
 
   # add build requirements global
@@ -37,6 +41,7 @@
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
+      yq \
       build-base \
       libressl \
       libffi-dev \
@@ -49,11 +54,16 @@
 
   # get source of package
   RUN set -ex; \
-    eleven git clone xmlsec/python-xmlsec.git ${WHEEL_VERSION};
+    eleven git clone ${BUILD_SRC} ${WHEEL_VERSION};
 
   # build wheels
   RUN set -ex; \
     cd ${BUILD_ROOT}; \
+    if [ $(yq -oj '.' pyproject.toml | jq -r '.project') == "null" ]; then \
+      echo "[project]" >> ./pyproject.toml; \
+      echo "name = '${WHEEL_NAME}'" >> ./pyproject.toml; \
+      echo "version = '${WHEEL_VERSION}'" >> ./pyproject.toml; \
+    fi; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2;
