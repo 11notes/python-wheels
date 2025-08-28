@@ -237,3 +237,30 @@ jobs:
           name: ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}
           files: |
             ./whl/${{ github.event.inputs.wheel }}/*
+
+      # CREATE LINKS
+      - name: html / block
+        run: |
+          cd ./whl/${{ github.event.inputs.wheel }}
+          echo "" > ./${{ github.event.inputs.wheel }}.html
+          for WHL in *; do
+            echo "<a href='https://github.com/11notes/python-wheels/releases/download/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./${{ github.event.inputs.wheel }}.html
+          done
+          git add ./${{ github.event.inputs.wheel }}.html
+          git commit -m "chore: update ${{ github.event.inputs.wheel }}.html"
+          git push
+
+      # CREATE INDEX
+      - name: html / index
+        run: |
+          cd ./whl
+          echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python</h1>" > ./index.html
+          for WHL in *; do
+            if [ -f "./${WHL}/${WHL}.html" ]; then
+              cat "./${WHL}/${WHL}.html" >> ./index.html
+            fi
+          done
+          echo "</body></html>" > ./index.html
+          git add ./index.html
+          git commit -m "chore: update index.html"
+          git push
