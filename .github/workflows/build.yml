@@ -228,6 +228,7 @@ jobs:
 
       # CREATE WHEEL LINKS
       - name: html / wheel
+        continue-on-error: true
         run: |
           cd ./whl/${{ github.event.inputs.wheel }}
           echo "" > ./${{ github.event.inputs.wheel }}.html
