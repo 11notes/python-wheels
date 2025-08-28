@@ -16,7 +16,7 @@ jobs:
           echo "RELEASE=$(curl -s https://api.github.com/repos/11notes/python-wheels/releases/tags/xmlsec-${LATEST} | jq -r '.id')" >> "${GITHUB_ENV}"
 
       - name: call / build.yml
-        if: env.RELEASE != 'null'
+        if: env.RELEASE == 'null'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
           wait-for-completion: false
