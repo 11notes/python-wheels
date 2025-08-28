@@ -26,12 +26,13 @@ jobs:
       - name: html / index
         run: |
           echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python</h1>" > ./docs/index.html
-          for WHL in ./whl; do
-            if [ -f "./whl/${WHL}/${WHL}.html" ]; then
+          for WHL in ./whl/*; do
+            NAME=$(echo "${WHL}" | sed "s#./whl/##")
+            if [ -f "${WHL}/${NAME}.html" ]; then
               echo "adding ${WHL} links ..."
-              cat "./whl/${WHL}/${WHL}.html" >> ./docs/index.html
+              cat "${WHL}/${NAME}.html" >> ./docs/index.html
             else
-              echo "${WHL} has no links!"
+              echo "${NAME} has no links!"
             fi
           done
           echo "</body></html>" >> ./docs/index.html
