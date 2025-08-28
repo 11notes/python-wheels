@@ -43,7 +43,8 @@
   RUN set -ex; \
     apk --no-cache --update add \
       py3-cffi \
-      openssl-dev;
+      openssl-dev; \
+    pip install -f https://11notes.github.io/python-wheels/ maturin;
 
   # get source of package
   RUN set -ex; \
