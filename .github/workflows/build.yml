@@ -205,6 +205,18 @@ jobs:
           name: ${{ github.event.inputs.wheel }}.whl
           path: ${{ runner.temp }}/whl
 
+      # FIX SEMVER ISSUES
+      - name: wheel / fix
+        run: |
+          cd ${{ runner.temp }}/whl/
+          for WHL in *; do
+            if echo "${WHL}" | grep -q "0.0.0"; then
+              WHL_NEW=$(echo "${WHL}" | sed 's/0.0.0/'${{ github.event.inputs.version }}'/')
+              echo "renaming ${WHL} to ${WHL_NEW}"
+              mv ${WHL} ${WHL_NEW}
+            fi
+          done
+
       # GIT PUSH ALL WHEELS AT ONCE
       - name: git / push
         run: |
