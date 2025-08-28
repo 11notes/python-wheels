@@ -243,7 +243,7 @@ jobs:
         run: |
           cd ./whl/${{ github.event.inputs.wheel }}
           echo "" > ./${{ github.event.inputs.wheel }}.html
-          for WHL in *; do
+          for WHL in *.whl; do
             echo "<a href='https://github.com/11notes/python-wheels/releases/download/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./${{ github.event.inputs.wheel }}.html
           done
           git add ./${{ github.event.inputs.wheel }}.html
@@ -260,7 +260,7 @@ jobs:
               cat "./${WHL}/${WHL}.html" >> ./index.html
             fi
           done
-          echo "</body></html>" > ./index.html
+          echo "</body></html>" >> ./index.html
           git add ./index.html
           git commit -m "chore: update index.html"
           git push
