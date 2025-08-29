@@ -62,14 +62,14 @@
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
-    mv ${PWD}/.dist /;
+    cp -af ${PWD}/.dist/. /.dist;
 
   RUN set -ex; \
     cd ${BUILD_ROOT}/psycopg_pool; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
-    mv ${PWD}/.dist /;
+    cp -af ${PWD}/.dist/. /.dist;
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
