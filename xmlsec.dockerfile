@@ -51,18 +51,19 @@
   RUN set -ex; \
     eleven git clone ${BUILD_SRC} ${WHEEL_VERSION};
 
+  # fix scm_version
+  RUN set -ex; \
+    cd ${BUILD_ROOT}; \
+    sed -i "s/use_scm_version=True/version='${WHEEL_VERSION}'/" ./setup.py;
+
   # build wheels
   RUN set -ex; \
     cd ${BUILD_ROOT}; \
-    sed -i "s/use_scm_version=True/version='${WHEEL_VERSION}'/" ./setup.py; \
     gpep517 build-wheel \
       --wheel-dir .dist \
-      --output-fd 3 3>&1 >&2;
+      --output-fd 3 3>&1 >&2; \
+    mv ${PWD}/.dist /;
 
-  # push wheels
-  RUN set -ex; \
-    mkdir -p /dst; \
-    mv ${BUILD_ROOT}/.dist /;
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║

@@ -62,12 +62,9 @@
     cd ${BUILD_ROOT}; \
     gpep517 build-wheel \
       --wheel-dir .dist \
-      --output-fd 3 3>&1 >&2;
+      --output-fd 3 3>&1 >&2; \
+    mv ${PWD}/.dist /;
 
-  # push wheels
-  RUN set -ex; \
-    mkdir -p /dst; \
-    mv ${BUILD_ROOT}/.dist /;
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
