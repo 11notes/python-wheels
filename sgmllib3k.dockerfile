@@ -7,8 +7,8 @@
       WHEEL_VERSION=0
 
 # :: APP SPECIFIC
-  ARG BUILD_ROOT=/nh3 \
-      BUILD_SRC=messense/nh3.git
+  ARG BUILD_ROOT=/sgmllib3k \
+      BUILD_SRC=don-makaron/sgmllib3k.git
 
 # :: FOREIGN IMAGES
   FROM 11notes/util:bin AS util-bin
