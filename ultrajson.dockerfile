@@ -51,7 +51,7 @@
   # build wheels
   RUN set -ex; \
     cd ${BUILD_ROOT}; \
-    python -m pip install ujson={WHEEL_VERSION}; \
+    python -m pip install ujson=${WHEEL_VERSION}; \
     mkdir -p /.dist; \
     find /root/.cache/pip/wheels -name "*.whl" -exec mv "{}" /.dist ';'
 
