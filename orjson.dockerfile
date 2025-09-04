@@ -28,6 +28,7 @@
 
   # build wheels
   RUN set -ex; \
+    /usr/local/bin/python --version; \
     cd ${BUILD_ROOT}; \
     gpep517 build-wheel \
       --wheel-dir .dist \
