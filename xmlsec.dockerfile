@@ -18,27 +18,13 @@
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
-  FROM 11notes/python:${PYTHON_VERSION} AS build
+  FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   COPY --from=util-bin / /
   ARG PYTHON_VERSION \
       WHEEL_NAME \
       WHEEL_VERSION \
       BUILD_ROOT \
       BUILD_SRC
-  USER root
-
-  # add build requirements global
-  RUN set -ex; \
-    apk --no-cache --update add \
-      git \
-      cargo \
-      cython \
-      python3-dev \
-      py3-pkgconfig \
-      py3-setuptools \
-      py3-maturin \
-      py3-gpep517 \
-      py3-wheel;
 
   # add build requirements wheel specific
   RUN set -ex; \
