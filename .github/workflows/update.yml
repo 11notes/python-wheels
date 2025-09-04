@@ -1,32 +1,34 @@
-name: update
-run-name: update ${{ inputs.wheel }}
+name: nh3
 
 on:
   workflow_dispatch:
     inputs:
-      wheel:
-        description: 'name of wheel to use for build'
-        type: string
-        required: true
-
       version:
-        description: 'version of wheel to build'
+        description: "set semver for build"
         type: string
-        required: true
+        required: false
+        default: "null"
+  schedule:
+    - cron: "0 5 * * *"
 
 jobs:
-  update:
+  nh3:
     runs-on: ubuntu-latest
-    steps:
-      - name: release / get
-        run: |
-          echo "RELEASE=$(curl -s https://api.github.com/repos/11notes/python-wheels/releases/tags/${{ inputs.wheel }}-${{ inputs.version }} | jq -r '.id')" >> "${GITHUB_ENV}"
 
-      - name: call / build.yml
-        if: env.RELEASE == 'null'
+    steps:
+      - name: udpate / get latest version
+        run: |
+          if [ "${{ github.event.inputs.version }}" != "null" ]; then
+            echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
+          else
+            echo "LATEST=$(curl -s https://api.github.com/repos/messense/nh3/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
+          fi
+
+      - name: udpate / call update workflow
+        if: env.LATEST != 'null'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
           wait-for-completion: false
-          workflow: build.yml
+          workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"${{ inputs.wheel }}", "version":"${{ inputs.version }}" }'
+          inputs: '{ "wheel":"nh3", "version":"${{ env.LATEST }}" }'
