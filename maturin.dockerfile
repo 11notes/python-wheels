@@ -10,47 +10,26 @@
   ARG BUILD_ROOT=/maturin \
       BUILD_SRC=PyO3/maturin.git
 
-# :: FOREIGN IMAGES
-  FROM 11notes/util:bin AS util-bin
-
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
-  FROM 11notes/python:${PYTHON_VERSION} AS build
-  COPY --from=util-bin / /
+  FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG PYTHON_VERSION \
       WHEEL_NAME \
       WHEEL_VERSION \
       BUILD_ROOT \
       BUILD_SRC
-  USER root
-
-  # add build requirements global
-  RUN set -ex; \
-    apk --no-cache --update add \
-      git \
-      cargo \
-      python3-dev \
-      py3-pkgconfig \
-      py3-setuptools \
-      py3-maturin \
-      py3-gpep517 \
-      py3-wheel;
 
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
       bzip2-dev \
       dbus-dev \
-      openssl-dev \
       cargo-nextest \
       libffi-dev \
-      patchelf \
-      py3-cffi \
-      py3-setuptools-rust \
-      py3-virtualenv;
+      py3-cffi;
 
 
   # get source of package

@@ -10,40 +10,22 @@
   ARG BUILD_ROOT=/psycopg \
       BUILD_SRC=psycopg/psycopg.git
 
-# :: FOREIGN IMAGES
-  FROM 11notes/util:bin AS util-bin
-
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
-  FROM 11notes/python:${PYTHON_VERSION} AS build
-  COPY --from=util-bin / /
+  FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG PYTHON_VERSION \
       WHEEL_NAME \
       WHEEL_VERSION \
       BUILD_ROOT \
       BUILD_SRC
-  USER root
-
-  # add build requirements global
-  RUN set -ex; \
-    apk --no-cache --update add \
-      git \
-      cargo \
-      python3-dev \
-      py3-pkgconfig \
-      py3-setuptools \
-      py3-maturin \
-      py3-gpep517 \
-      py3-wheel;
 
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
-      libpq-dev \
-      cython;
+      libpq-dev;
 
   # get source of package
   RUN set -ex; \

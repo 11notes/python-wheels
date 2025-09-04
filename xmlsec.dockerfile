@@ -10,16 +10,12 @@
   ARG BUILD_ROOT=/python-xmlsec \
       BUILD_SRC=xmlsec/python-xmlsec.git
 
-# :: FOREIGN IMAGES
-  FROM 11notes/util:bin AS util-bin
-
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  COPY --from=util-bin / /
   ARG PYTHON_VERSION \
       WHEEL_NAME \
       WHEEL_VERSION \
