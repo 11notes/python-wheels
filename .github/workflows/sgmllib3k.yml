@@ -18,14 +18,14 @@ jobs:
     steps:
       - name: udpate / get latest version
         run: |
-          if [ "${{ github.event.inputs.version }}" != "null" ]; then
+          if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
             echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
           else
             echo "LATEST=$(curl -s https://api.github.com/repos/don-makaron/sgmllib3k/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
           fi
 
       - name: udpate / call update workflow
-        if: env.LATEST != 'null'
+        if: env.LATEST != 'null' && env.LATEST != ''
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
           wait-for-completion: false
