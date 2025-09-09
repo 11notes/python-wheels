@@ -18,11 +18,7 @@ jobs:
     steps:
       - name: udpate / get latest version
         run: |
-          if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
-            echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
-          else
-            echo "LATEST=$(curl -s https://api.github.com/repos/don-makaron/sgmllib3k/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
-          fi
+          echo "LATEST=latest" >> "${GITHUB_ENV}"
 
       - name: udpate / call update workflow
         if: env.LATEST != 'null' && env.LATEST != ''
