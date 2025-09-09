@@ -1,0 +1,30 @@
+name: django-pglocks
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "set semver for build"
+        type: string
+        required: false
+        default: "null"
+  schedule:
+    - cron: "0 5 * * *"
+
+jobs:
+  django-pglocks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: udpate / get latest version
+        run: |
+          echo "LATEST=latest" >> "${GITHUB_ENV}"
+
+      - name: udpate / call update workflow
+        if: env.LATEST != 'null' && env.LATEST != ''
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          wait-for-completion: false
+          workflow: update.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "wheel":"django-pglocks", "version":"${{ env.LATEST }}" }'
