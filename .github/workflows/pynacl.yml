@@ -21,7 +21,7 @@ jobs:
           if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
             echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
           else
-            echo "LATEST=$(curl -s https://api.github.com/repos/pyca/pynacl/tags | jq -r ['.[].name | select(test("^[0-9]")) '][0])" >> "${GITHUB_ENV}"
+            echo "LATEST=$(curl -s https://api.github.com/repos/pyca/pynacl/tags | jq -r ['.[].name | select(test("^[0-9]+")) '][0])" >> "${GITHUB_ENV}"
           fi
 
       - name: udpate / call update workflow
