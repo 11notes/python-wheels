@@ -31,8 +31,8 @@ jobs:
           echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python on alpine linux</h1>" > ./docs/index.html
           for WHL in ./whl/*; do
             for VERSION in ${WHL}/*; do
-              if [ -f "${VERSION}.html" ]; then
-                cat "${VERSION}.html" >> ./docs/index.html
+              if [ -f "${VERSION}/index.html" ]; then
+                cat "${VERSION}/index.html" >> ./docs/index.html
               fi
             done
           done
