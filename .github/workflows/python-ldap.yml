@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 5 * * *"
+    - cron: "45 8 * * *"
 
 jobs:
   python-ldap:
