@@ -29,9 +29,8 @@
   # build wheels
   RUN set -ex; \
     cd ${BUILD_ROOT}; \
-    gpep517 build-wheel \
-      --wheel-dir .dist \
-      --output-fd 3 3>&1 >&2; \
+    pip-build-wheel \
+      aiohttp==${WHEEL_VERSION}; \
     mv ${PWD}/.dist /;
 
 
