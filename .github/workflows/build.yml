@@ -198,8 +198,8 @@ jobs:
       # GIT PUSH ALL WHEELS AT ONCE
       - name: git / push
         run: |
-          mkdir -p ./whl/${{ github.event.inputs.wheel }}
-          cp -af ${{ runner.temp }}/whl/. ./whl/${{ github.event.inputs.wheel }}
+          mkdir -p ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
+          cp -af ${{ runner.temp }}/whl/. ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
@@ -213,19 +213,19 @@ jobs:
           tag_name: ${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}
           name: ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}
           files: |
-            ./whl/${{ github.event.inputs.wheel }}/*
+            ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}/*
 
       # CREATE WHEEL LINKS
       - name: html / wheel
         continue-on-error: true
         run: |
-          cd ./whl/${{ github.event.inputs.wheel }}
-          echo "" > ./${{ github.event.inputs.wheel }}.html
+          cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
+          echo "" > ./index.html
           for WHL in *.whl; do
-            echo "<a href='https://github.com/11notes/python-wheels/releases/download/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./${{ github.event.inputs.wheel }}.html
+            echo "<a href='https://github.com/11notes/python-wheels/releases/download/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./index.html
           done
-          git add ./${{ github.event.inputs.wheel }}.html
-          git commit -m "chore: update ${{ github.event.inputs.wheel }}.html"
+          git add ./index.html
+          git commit -m "chore: update index.html"
           git push
 
       # CREATE INDEX

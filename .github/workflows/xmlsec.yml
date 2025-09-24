@@ -10,7 +10,6 @@ on:
         default: "null"
   schedule:
     - cron: "0 5 * * *"
-    - cron: "0 9 * * *"
 
 jobs:
   xmlsec:

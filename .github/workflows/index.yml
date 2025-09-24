@@ -30,13 +30,11 @@ jobs:
         run: |
           echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>wheels for python on alpine linux</h1>" > ./docs/index.html
           for WHL in ./whl/*; do
-            NAME=$(echo "${WHL}" | sed "s#./whl/##")
-            if [ -f "${WHL}/${NAME}.html" ]; then
-              echo "adding ${WHL} links ..."
-              cat "${WHL}/${NAME}.html" >> ./docs/index.html
-            else
-              echo "${NAME} has no links!"
-            fi
+            for VERSION in ${WHL}/*; do
+              if [ -f "${VERSION}.html" ]; then
+                cat "${VERSION}.html" >> ./docs/index.html
+              fi
+            done
           done
           echo "</body></html>" >> ./docs/index.html
           git config user.name "github-actions[bot]"
