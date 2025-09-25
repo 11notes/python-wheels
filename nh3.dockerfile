@@ -19,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | awk -F '.' '{print $1}'); \
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||'); \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \

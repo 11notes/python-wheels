@@ -2,13 +2,7 @@
 # ║                       SETUP                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: GLOBAL
-  ARG PYTHON_VERSION=0 \
-      WHEEL_NAME="" \
-      WHEEL_VERSION=0
-
-# :: APP SPECIFIC
-  ARG BUILD_ROOT=/paho.mqtt.python \
-      BUILD_SRC=eclipse-paho/paho.mqtt.python.git
+  ARG PYTHON_VERSION=0
 
 
 # ╔═════════════════════════════════════════════════════╗
@@ -16,24 +10,21 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG PYTHON_VERSION \
-      WHEEL_NAME \
-      WHEEL_VERSION \
-      BUILD_ROOT \
-      BUILD_SRC
+  ARG WHEEL_VERSION \
+      BUILD_SRC=eclipse-paho/paho.mqtt.python.git
+
+  # get source of package
+  RUN set -ex; \
+    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
 
   # add build requirements wheel specific
   RUN set -ex; \
     pip install -f https://11notes.github.io/python-wheels/ \
       hatchling;
 
-  # get source of package
-  RUN set -ex; \
-    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
-
   # build wheels
   RUN set -ex; \
-    cd ${BUILD_ROOT}; \
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||'); \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
