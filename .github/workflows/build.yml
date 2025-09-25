@@ -182,10 +182,6 @@ jobs:
       contents: write
 
     steps:
-      # CHECKOUT REPO
-      - name: init / checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-
       # SAVE WHEEL IN ARTIFACT
       - name: artifact / load wheels
         continue-on-error: true
@@ -194,6 +190,10 @@ jobs:
           path: ${{ runner.temp }}/whl
           pattern: ${{ github.event.inputs.wheel }}.whl*
           merge-multiple: true
+
+      # CHECKOUT REPO
+      - name: init / checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       # GIT PUSH ALL WHEELS AT ONCE
       - name: git / push
