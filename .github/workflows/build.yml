@@ -227,11 +227,3 @@ jobs:
           git add ./index.html
           git commit -m "chore: update index.html"
           git push
-
-      # CREATE INDEX
-      - name: html / index
-        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
-        with:
-          wait-for-completion: false
-          workflow: index.yml
-          token: "${{ secrets.REPOSITORY_TOKEN }}"
