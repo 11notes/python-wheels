@@ -10,7 +10,9 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG WHEEL_VERSION \
+  ARG TARGETARCH \
+      TARGETVARIANT \
+      WHEEL_VERSION \
       BUILD_SRC=pyca/bcrypt.git
 
   # get source of package
@@ -20,10 +22,7 @@
   # build wheels
   RUN set -ex; \
     cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||'); \
-    gpep517 build-wheel \
-      --wheel-dir .dist \
-      --output-fd 3 3>&1 >&2; \
-    mv ${PWD}/.dist /;
+    gpep517-build-wheel
 
 
 # ╔═════════════════════════════════════════════════════╗
