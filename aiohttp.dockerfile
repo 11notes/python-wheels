@@ -4,24 +4,16 @@
 # :: GLOBAL
   ARG PYTHON_VERSION=0
 
-# :: APP SPECIFIC
-  ARG BUILD_SRC=aio-libs/aiohttp.git
-
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG PYTHON_VERSION \
-      WHEEL_NAME \
-      WHEEL_VERSION \
-      BUILD_ROOT \
-      BUILD_SRC
+  ARG WHEEL_VERSION
 
   # build wheels
   RUN set -ex; \
-    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | awk -F '.' '{print $1}'); \
     pip-build-wheel \
       aiohttp==${WHEEL_VERSION}; \
     mv ${PWD}/.dist /;
