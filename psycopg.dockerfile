@@ -2,13 +2,7 @@
 # ║                       SETUP                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: GLOBAL
-  ARG PYTHON_VERSION=0 \
-      WHEEL_NAME="" \
-      WHEEL_VERSION=0
-
-# :: APP SPECIFIC
-  ARG BUILD_ROOT=/psycopg \
-      BUILD_SRC=psycopg/psycopg.git
+  ARG PYTHON_VERSION=0
 
 
 # ╔═════════════════════════════════════════════════════╗
@@ -16,42 +10,40 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG PYTHON_VERSION \
-      WHEEL_NAME \
-      WHEEL_VERSION \
-      BUILD_ROOT \
-      BUILD_SRC
+  ARG WHEEL_VERSION \
+      BUILD_SRC=psycopg/psycopg.git
+
+  # get source of package
+  RUN set -ex; \
+    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
 
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
       libpq-dev;
 
-  # get source of package
-  RUN set -ex; \
-    eleven git clone ${BUILD_SRC} ${WHEEL_VERSION};
-
   # build wheels
   RUN set -ex; \
-    cd ${BUILD_ROOT}/psycopg_c; \
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||')/psycopg_c; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
     mv ${PWD}/.dist /;
 
   RUN set -ex; \
-    cd ${BUILD_ROOT}/psycopg; \
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||')/psycopg; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
-    cp -af ${PWD}/.dist/. /.dist;
+    mv ${PWD}/.dist /;
 
   RUN set -ex; \
-    cd ${BUILD_ROOT}/psycopg_pool; \
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||')/psycopg_pool; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
-    cp -af ${PWD}/.dist/. /.dist;
+    mv ${PWD}/.dist /;
+
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
