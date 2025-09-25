@@ -10,13 +10,19 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG WHEEL_VERSION
+  ARG TARGETARCH \
+      TARGETVARIANT \
+      WHEEL_VERSION \
+      BUILD_SRC=samuelcolvin/watchfiles.git
+
+  # get source of package
+  RUN set -ex; \
+    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel \
-      watchfiles==${WHEEL_VERSION}; \
-    mv ${PWD}/.dist /;
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||'); \
+    gpep517-build-wheel
 
 
 # ╔═════════════════════════════════════════════════════╗
