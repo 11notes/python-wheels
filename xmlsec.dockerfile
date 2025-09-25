@@ -26,8 +26,9 @@
   RUN set -ex; \
     apk --no-cache --update add \
       libxml2-dev \
-	    xmlsec-dev \
-      py3-lxml;
+	    xmlsec-dev; \
+    pip install -f https://11notes.github.io/python-wheels/ \
+      lxml;
 
   # get source of package
   RUN set -ex; \

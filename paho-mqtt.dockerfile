@@ -24,9 +24,8 @@
 
   # add build requirements wheel specific
   RUN set -ex; \
-    apk --no-cache --update add \
-      py3-hatchling \
-      py3-hatchling-pyc;
+    pip install -f https://11notes.github.io/python-wheels/ \
+      hatchling;
 
   # get source of package
   RUN set -ex; \

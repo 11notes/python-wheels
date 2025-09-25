@@ -28,8 +28,9 @@
       bzip2-dev \
       dbus-dev \
       cargo-nextest \
-      libffi-dev \
-      py3-cffi;
+      libffi-dev; \
+    pip install -f https://11notes.github.io/python-wheels/ \
+      cffi;
 
 
   # get source of package

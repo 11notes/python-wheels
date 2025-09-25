@@ -24,9 +24,9 @@
 
   # add build requirements wheel specific
   RUN set -ex; \
-    apk --no-cache --update add \
-      py3-cffi; \
-    pip install -f https://11notes.github.io/python-wheels/ maturin;
+    pip install -f https://11notes.github.io/python-wheels/ \
+      cffi \
+      maturin;
 
   # get source of package
   RUN set -ex; \
