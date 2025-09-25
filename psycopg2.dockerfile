@@ -33,7 +33,7 @@
   RUN set -ex; \
     pip-build-wheel \
       psycopg2-binary==${WHEEL_VERSION}; \
-    mv ${PWD}/.dist /;
+    cp -af ${PWD}/.dist/. /.dist;
 
 
 # ╔═════════════════════════════════════════════════════╗
