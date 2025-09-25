@@ -17,6 +17,11 @@
   RUN set -ex; \
     eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
 
+  # add build requirements wheel specific
+  RUN set -ex; \
+    pip install -f https://11notes.github.io/python-wheels/ \
+      typing-extensions;
+
   # build wheels
   RUN set -ex; \
     cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||'); \
