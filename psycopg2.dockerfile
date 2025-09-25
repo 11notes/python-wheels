@@ -30,6 +30,11 @@
       --output-fd 3 3>&1 >&2; \
     mv ${PWD}/.dist /;
 
+  RUN set -ex; \
+    pip-build-wheel \
+      psycopg2-binary==${WHEEL_VERSION}; \
+    mv ${PWD}/.dist /;
+
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
