@@ -2,13 +2,7 @@
 # ║                       SETUP                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: GLOBAL
-  ARG PYTHON_VERSION=0 \
-      WHEEL_NAME="" \
-      WHEEL_VERSION=0
-
-# :: APP SPECIFIC
-  ARG BUILD_ROOT=/nh3 \
-      BUILD_SRC=messense/nh3.git
+  ARG PYTHON_VERSION=0
 
 
 # ╔═════════════════════════════════════════════════════╗
@@ -16,11 +10,8 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG PYTHON_VERSION \
-      WHEEL_NAME \
-      WHEEL_VERSION \
-      BUILD_ROOT \
-      BUILD_SRC
+  ARG WHEEL_VERSION \
+      BUILD_SRC=messense/nh3.git
 
   # get source of package
   RUN set -ex; \
@@ -28,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    cd ${BUILD_ROOT}; \
+    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | awk -F '.' '{print $1}'); \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
