@@ -35,14 +35,14 @@
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
-    mv ${PWD}/.dist /;
+    cp -af ${PWD}/.dist/. /.dist;
 
   RUN set -ex; \
     cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||')/psycopg_pool; \
     gpep517 build-wheel \
       --wheel-dir .dist \
       --output-fd 3 3>&1 >&2; \
-    mv ${PWD}/.dist /;
+    cp -af ${PWD}/.dist/. /.dist;
 
 
 # ╔═════════════════════════════════════════════════════╗
