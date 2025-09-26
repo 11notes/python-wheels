@@ -15,6 +15,9 @@
       WHEEL_VERSION \
       BUILD_SRC=samuelcolvin/watchfiles.git
 
+  RUN set -ex; \
+    uname -m;
+
   # get source of package
   RUN set -ex; \
     eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
