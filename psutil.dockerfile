@@ -10,19 +10,15 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG TARGETARCH \
-      TARGETVARIANT \
-      WHEEL_VERSION \
-      BUILD_SRC=giampaolo/psutil.git
+  ARG WHEEL_VERSION
 
   # get source of package
   RUN set -ex; \
-    eleven git clone ${BUILD_SRC} release-${WHEEL_VERSION};
+    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
 
   # build wheels
   RUN set -ex; \
-    cd $(echo "${BUILD_SRC}" | awk -F '/' '{print $2}' | sed 's|.git$||'); \
-    gpep517-build-wheel
+    gpep517-build-wheel https://github.com/giampaolo/psutil.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
