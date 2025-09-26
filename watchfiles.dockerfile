@@ -12,10 +12,6 @@
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG WHEEL_VERSION
 
-  # get source of package
-  RUN set -ex; \
-    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
-
   # build wheels
   RUN set -ex; \
     gpep517-build-wheel https://github.com/samuelcolvin/watchfiles.git v${WHEEL_VERSION};
