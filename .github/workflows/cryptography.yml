@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "45 5 * * *"
+    - cron: "45 6 * * *"
 
 jobs:
   cryptography:
