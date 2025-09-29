@@ -1,4 +1,4 @@
-name: aiohttp
+name: annotatedyaml
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
     - cron: "0 5 * * *"
 
 jobs:
-  aiohttp:
+  annotatedyaml:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"aiohttp", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"annotatedyaml", "version":"${{ env.LATEST }}" }'
