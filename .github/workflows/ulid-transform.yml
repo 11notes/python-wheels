@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"ulid-transform", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"ulid_transform", "version":"${{ env.LATEST }}" }'
