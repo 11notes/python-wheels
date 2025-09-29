@@ -14,9 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel \
-      ujson==${WHEEL_VERSION}; \
-    mv ${PWD}/.dist /;
+    pip-build-wheel ujson==${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
