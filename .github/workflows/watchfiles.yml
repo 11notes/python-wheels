@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 14 * * *"
+    - cron: "30 14 * * *"
 
 jobs:
   watchfiles:
