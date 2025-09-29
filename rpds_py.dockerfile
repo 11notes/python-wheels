@@ -2,13 +2,7 @@
 # ║                       SETUP                         ║
 # ╚═════════════════════════════════════════════════════╝
 # :: GLOBAL
-  ARG PYTHON_VERSION=0 \
-      WHEEL_NAME="" \
-      WHEEL_VERSION=0
-
-# :: APP SPECIFIC
-  ARG BUILD_ROOT=/rpds \
-      BUILD_SRC=crate-py/rpds.git
+  ARG PYTHON_VERSION=0
 
 
 # ╔═════════════════════════════════════════════════════╗
@@ -16,23 +10,11 @@
 # ╚═════════════════════════════════════════════════════╝
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
-  ARG PYTHON_VERSION \
-      WHEEL_NAME \
-      WHEEL_VERSION \
-      BUILD_ROOT \
-      BUILD_SRC
-
-  # get source of package
-  RUN set -ex; \
-    eleven git clone ${BUILD_SRC} v${WHEEL_VERSION};
+  ARG WHEEL_VERSION
 
   # build wheels
   RUN set -ex; \
-    cd ${BUILD_ROOT}; \
-    gpep517 build-wheel \
-      --wheel-dir .dist \
-      --output-fd 3 3>&1 >&2; \
-    mv ${PWD}/.dist /;
+    gpep517-build-wheel https://github.com/crate-py/rpds.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

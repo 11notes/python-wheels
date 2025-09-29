@@ -19,10 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel \
-      psycopg2-binary==${WHEEL_VERSION}; \
-    mv ${PWD}/.dist /; \
-    find /pip/wheels -name "*.whl" -exec mv "{}" /.dist ";";
+    pip-build-wheel psycopg2-binary==${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
