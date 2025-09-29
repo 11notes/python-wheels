@@ -1,0 +1,34 @@
+name: av
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "set semver for build"
+        type: string
+        required: false
+        default: "null"
+  schedule:
+    - cron: "45 5 * * *"
+
+jobs:
+  av:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: udpate / get latest version
+        run: |
+          if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
+            echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
+          else
+            echo "LATEST=$(curl -s https://api.github.com/repos/PyAV-Org/PyAV/tags | jq -r ['.[].name | select(test("^v[0-9]+")) '][0] | sed 's/v//')" >> "${GITHUB_ENV}"
+          fi
+
+      - name: udpate / call update workflow
+        if: env.LATEST != 'null' && env.LATEST != ''
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          wait-for-completion: false
+          workflow: update.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "wheel":"av", "version":"${{ env.LATEST }}" }'
