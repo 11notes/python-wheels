@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"audioop-lts", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"audioop-lts", "version":"${{ env.LATEST }}", "python":"3.13}" }'
