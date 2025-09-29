@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "15 6 * * *"
 
 jobs:
   bcrypt:

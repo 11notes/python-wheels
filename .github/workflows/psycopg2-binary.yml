@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 11 * * *"
+    - cron: "15 11 * * *"
 
 jobs:
   psycopg2-binary:
