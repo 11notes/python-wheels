@@ -14,7 +14,8 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel ulid-transform==${WHEEL_VERSION};
+    pip-build-wheel ulid-transform==${WHEEL_VERSION}; \
+    find /pip/wheels -name "*ulid_transform*.whl" -exec cp "{}" /.dist ";"
 
 
 # ╔═════════════════════════════════════════════════════╗
