@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "15 8 * * *"
+    - cron: "36 7 * * *"
 
 jobs:
   dbus-fast:

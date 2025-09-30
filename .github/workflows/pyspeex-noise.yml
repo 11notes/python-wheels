@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "45 15 * * *"
+    - cron: "48 13 * * *"
 
 jobs:
   pyspeex-noise:

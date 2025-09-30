@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "15 5 * * *"
+    - cron: "12 5 * * *"
 
 jobs:
   aiokafka:

@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "30 17 * * *"
+    - cron: "24 15 * * *"
 
 jobs:
   slixmpp:

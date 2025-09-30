@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "45 17 * * *"
+    - cron: "36 15 * * *"
 
 jobs:
   ulid-transform:
