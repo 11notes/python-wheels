@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "45 11 * * *"
+    - cron: "45 12 * * *"
 
 jobs:
   numpy:

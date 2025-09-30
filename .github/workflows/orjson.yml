@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 12 * * *"
+    - cron: "0 13 * * *"
 
 jobs:
   orjson:

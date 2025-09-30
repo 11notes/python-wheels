@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "15 7 * * *"
+    - cron: "30 7 * * *"
 
 jobs:
   ciso8601:
