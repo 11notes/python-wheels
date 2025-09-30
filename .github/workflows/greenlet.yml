@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "15 9 * * *"
 
 jobs:
   greenlet:
