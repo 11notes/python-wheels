@@ -1,5 +1,5 @@
 name: build
-run-name: build ${{ inputs.wheel }} ${{ inputs.version }} (${{ inputs.python }}@${{ inputs.platform }})
+run-name: build ${{ inputs.wheel }} ${{ inputs.version }}
 
 on:
   workflow_dispatch:
