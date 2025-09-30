@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel ephem==${WHEEL_VERSION};
+    gpep517-build-wheel https://github.com/brandon-rhodes/pyephem.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
