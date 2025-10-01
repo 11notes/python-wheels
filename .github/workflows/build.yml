@@ -203,6 +203,7 @@ jobs:
       # GIT PUSH ALL WHEELS AT ONCE
       - name: git / push
         run: |
+          git lfs install
           git pull
           mkdir -p ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           cp -af ${{ runner.temp }}/whl/. ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
