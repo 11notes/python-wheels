@@ -71,7 +71,7 @@ jobs:
     needs: matrix
     runs-on: ${{ matrix.runner }}
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
 
     steps:
