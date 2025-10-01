@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel grpc==${WHEEL_VERSION};
+    pip-build-wheel grpcio==${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
