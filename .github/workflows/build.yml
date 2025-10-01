@@ -225,6 +225,7 @@ jobs:
       - name: html / wheel
         continue-on-error: true
         run: |
+          git pull
           cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           echo "" > ./index.html
           for WHL in *.whl; do
@@ -237,6 +238,7 @@ jobs:
       # GIT DELETE WHEEL FROM REPO AFTER RELEASE
       - name: git / delete
         run: |
+          git pull
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
