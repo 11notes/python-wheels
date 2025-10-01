@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "24 13 * * *"
+    - cron: "48 13 * * *"
 
 jobs:
   pymicro-vad:

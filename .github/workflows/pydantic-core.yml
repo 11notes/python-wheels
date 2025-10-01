@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "12 13 * * *"
+    - cron: "36 13 * * *"
 
 jobs:
   pydantic-core:

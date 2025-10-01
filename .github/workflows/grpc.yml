@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 11 * * *"
+    - cron: "0 9 * * *"
 
 jobs:
   grpc:

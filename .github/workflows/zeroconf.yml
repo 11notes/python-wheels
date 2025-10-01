@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "48 16 * * *"
+    - cron: "12 17 * * *"
 
 jobs:
   zeroconf:
