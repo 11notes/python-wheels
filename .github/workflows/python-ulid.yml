@@ -1,4 +1,4 @@
-name: ulid-transform
+name: python-ulid
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
     - cron: "36 15 * * *"
 
 jobs:
-  ulid-transform:
+  python-ulid:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"ulid-transform", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"python-ulid", "version":"${{ env.LATEST }}" }'
