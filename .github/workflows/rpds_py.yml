@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "12 15 * * *"
+    - cron: "24 16 * * *"
 
 jobs:
   rpds_py:
