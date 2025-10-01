@@ -241,4 +241,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore: remove ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}"
+          git add .
           git push
