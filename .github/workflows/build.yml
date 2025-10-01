@@ -237,9 +237,11 @@ jobs:
       # GIT DELETE WHEEL FROM REPO AFTER RELEASE
       - name: git / delete
         run: |
-          rm -rf ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}/*.whl
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
+          for WHL in *.whl; do
+            git rm ${WHL}
+          done
           git commit -m "chore: remove ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}"
-          git add .
           git push
