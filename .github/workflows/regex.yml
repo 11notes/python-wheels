@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "48 18 * * *"
+    - cron: "24 12 * * *"
 
 jobs:
   regex:

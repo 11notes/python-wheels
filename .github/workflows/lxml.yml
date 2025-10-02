@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "24 12 * * *"
+    - cron: "0 9 * * *"
 
 jobs:
   lxml:

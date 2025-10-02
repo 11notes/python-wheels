@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 13 * * *"
+    - cron: "30 5 * * *"
 
 jobs:
   awscrt:

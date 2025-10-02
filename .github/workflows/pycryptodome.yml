@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "24 16 * * *"
+    - cron: "12 11 * * *"
 
 jobs:
   pycryptodome:

@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 13 * * *"
+    - cron: "24 9 * * *"
 
 jobs:
   miniaudio:

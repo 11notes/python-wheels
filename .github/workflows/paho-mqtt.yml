@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "12 14 * * *"
+    - cron: "6 10 * * *"
 
 jobs:
   paho-mqtt:
