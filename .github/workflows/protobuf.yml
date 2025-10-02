@@ -22,7 +22,7 @@ jobs:
           if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
             echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
           else
-            echo "LATEST=$(curl -s https://api.github.com/repos/protocolbuffers/protobuf/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
+            echo "LATEST=$(curl -s https://pypi.org/pypi/protobuf/json | jq -r '.releases | keys[] | select(test("^[0-9]+.[0-9]+.[0-9]+$"))' | tail -n 1 | sed 's/v//')" >> "${GITHUB_ENV}"
           fi
 
       - name: udpate / call update workflow
