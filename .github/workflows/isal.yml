@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 10 * * *"
+    - cron: "36 11 * * *"
 
 jobs:
   isal:

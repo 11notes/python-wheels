@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 10 * * *"
 
 jobs:
   fnv-hash-fast:

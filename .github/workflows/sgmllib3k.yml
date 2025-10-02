@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 17 * * *"
+    - cron: "36 19 * * *"
 
 jobs:
   sgmllib3k:

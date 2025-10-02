@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 14 * * *"
+    - cron: "0 17 * * *"
 
 jobs:
   pyitachip2ir:

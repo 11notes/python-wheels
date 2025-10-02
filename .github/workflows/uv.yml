@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 17 * * *"
+    - cron: "12 20 * * *"
 
 jobs:
   uv:

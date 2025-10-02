@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "12 18 * * *"
+    - cron: "48 20 * * *"
 
 jobs:
   xmlsec:
