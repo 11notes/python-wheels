@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel jiter==HEEL_VERSION;
+    pip-build-wheel jiter==${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
