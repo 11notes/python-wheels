@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/mosquito/caio.git ${WHEEL_VERSION};
+    pip-build-wheel caio==${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
