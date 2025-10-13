@@ -14,8 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pyspeex-noise==${WHEEL_VERSION}; \
-    find /pip/wheels -name "*pyspeex_noise*.whl" -exec cp "{}" /.dist ";";
+    gpep517-build-wheel https://github.com/rhasspy/pyspeex-noise.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
