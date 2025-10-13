@@ -14,8 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pymicro-vad==${WHEEL_VERSION}; \
-    find /pip/wheels -name "*pymicro_vad*.whl" -exec cp "{}" /.dist ";";
+    gpep517-build-wheel https://github.com/rhasspy/pymicro-vad.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
