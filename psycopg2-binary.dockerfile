@@ -19,7 +19,8 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel psycopg2-binary==${WHEEL_VERSION};
+    pip-build-wheel psycopg2-binary==${WHEEL_VERSION}; \
+    find /pip/wheels -name "*psycopg2_binary*.whl" -exec cp "{}" /.dist ";"
 
 
 # ╔═════════════════════════════════════════════════════╗
