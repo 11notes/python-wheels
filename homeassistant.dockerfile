@@ -16,7 +16,6 @@
   RUN set -ex; \
     pip wheel \
       --wheel-dir /pip/wheels \
-      -f https://11notes.github.io/python-wheels/ \
       -f https://wheels.home-assistant.io/musllinux/ \
       homeassistant=="${WHEEL_VERSION}";
 
