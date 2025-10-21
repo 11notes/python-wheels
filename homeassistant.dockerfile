@@ -12,6 +12,12 @@
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG WHEEL_VERSION
 
+  # add build requirements wheel specific
+  RUN set -ex; \
+    apk --no-cache --update add \
+      zlib-dev \
+      libjpeg-turbo-dev;
+
   # build wheels
   RUN set -ex; \
     pip wheel \
