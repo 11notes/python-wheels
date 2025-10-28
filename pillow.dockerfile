@@ -16,7 +16,10 @@
   RUN set -ex; \
     apk --no-cache --update add \
       zlib-dev \
-      libjpeg-turbo-dev;
+      libjpeg-turbo-dev; \
+    pip install -f https://11notes.github.io/python-wheels/ \
+      pybind11;
+
 
   # build wheels
   RUN set -ex; \
