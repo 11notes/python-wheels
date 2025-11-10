@@ -17,7 +17,6 @@
     pip install -f https://11notes.github.io/python-wheels/ \
       pypdfium2 pillow cryptography cffi;
 
-
   # build wheels
   RUN set -ex; \
     gpep517-build-wheel https://github.com/jsvine/pdfplumber.git v${WHEEL_VERSION};
