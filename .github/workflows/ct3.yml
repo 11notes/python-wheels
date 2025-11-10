@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "54 6 * * *"
+    - cron: "0 7 * * *"
 
 jobs:
   ct3:

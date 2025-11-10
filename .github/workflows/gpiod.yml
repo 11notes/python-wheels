@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "48 7 * * *"
+    - cron: "54 7 * * *"
 
 jobs:
   gpiod:

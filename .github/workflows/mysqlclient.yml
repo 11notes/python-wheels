@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 9 * * *"
+    - cron: "42 9 * * *"
 
 jobs:
   mysqlclient:
