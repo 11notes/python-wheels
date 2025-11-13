@@ -2,8 +2,6 @@ name: index
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "55 */2 * * *"
 
 jobs:
   # ╔═════════════════════════════════════════════════════╗
