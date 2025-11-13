@@ -15,6 +15,7 @@
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update add \
+      mariadb-dev \
       mariadb-connector-c-dev ;
 
   # build wheels
