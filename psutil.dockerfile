@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/giampaolo/psutil.git release-${WHEEL_VERSION}
+    gpep517-build-wheel https://github.com/giampaolo/psutil.git release-${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
