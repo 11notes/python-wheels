@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pycryptodome==${WHEEL_VERSION};
+    gpep517-build-wheel https://github.com/Legrandin/pycryptodome.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
