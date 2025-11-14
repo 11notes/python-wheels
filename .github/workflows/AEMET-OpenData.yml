@@ -22,7 +22,7 @@ jobs:
           if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
             echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
           else
-            echo "LATEST=$(curl -s https://api.github.com/repos/messense/AEMET-OpenData/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
+            echo "LATEST=$(curl -s https://api.github.com/repos/Noltari/AEMET-OpenData/releases/latest | jq -r '.tag_name' | sed 's/v//')" >> "${GITHUB_ENV}"
           fi
 
       - name: udpate / call update workflow
