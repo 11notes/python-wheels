@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "24 5 * * *"
+    - cron: "30 5 * * *"
 
 jobs:
   audioop-lts:

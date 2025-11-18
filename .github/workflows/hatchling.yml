@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "24 8 * * *"
+    - cron: "30 8 * * *"
 
 jobs:
   hatchling:
@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"hatchling", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"hatchling", "version":"${{ env.LATEST }}", "python":"3.14", "platform":"amd64" }'

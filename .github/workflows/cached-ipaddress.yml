@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "18 6 * * *"
+    - cron: "24 6 * * *"
 
 jobs:
   cached-ipaddress:

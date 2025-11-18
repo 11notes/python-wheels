@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 7 * * *"
+    - cron: "42 7 * * *"
 
 jobs:
   ephem:

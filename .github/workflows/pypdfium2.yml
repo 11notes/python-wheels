@@ -32,4 +32,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"pypdfium2", "version":"${{ env.LATEST }}", "platform":"amd64,arm64" }'
+          inputs: '{ "wheel":"pypdfium2", "version":"${{ env.LATEST }}", "python":"3.14", "platform":"amd64" }'

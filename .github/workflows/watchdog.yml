@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "48 13 * * *"
+    - cron: "54 13 * * *"
 
 jobs:
   watchdog:
@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"watchdog", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"watchdog", "version":"${{ env.LATEST }}", "python":"3.14", "platform":"amd64" }'
