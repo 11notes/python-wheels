@@ -32,4 +32,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"pycryptodomex", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"pycryptodomex", "version":"${{ env.LATEST }}", "python":"3.14" }'
