@@ -21,7 +21,9 @@
     gpep517 build-wheel \
       --wheel-dir /tmp/.whl \
       --output-fd 3 3>&1 >&2; \
-    find /pip/wheels -name "*deebot_client*.whl" -exec cp "{}" /.dist ";"
+    find /tmp/.whl/* -name "*.whl" -exec auditwheel-build "{}" ";"; \
+    find /tmp/.whl/* -name "*none-any.whl" -exec cp "{}" /.dist ";"; \
+    find /.dist -name "*.whl" -exec auditwheel show "{}" ";";
 
 
 # ╔═════════════════════════════════════════════════════╗
