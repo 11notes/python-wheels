@@ -14,7 +14,13 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel deebot-client==${WHEEL_VERSION}; \
+    mkdir -p /tmp/.whl; \
+    eleven git clone DeebotUniverse/client.py.git ${WHEEL_VERSION} /build; \
+    cd /build; \
+    sed -i 's|version = "0.0.0"|version = "'${WHEEL_VERSION}'"|' pyproject.toml; \
+    gpep517 build-wheel \
+      --wheel-dir /tmp/.whl \
+      --output-fd 3 3>&1 >&2; \
     find /pip/wheels -name "*deebot_client*.whl" -exec cp "{}" /.dist ";"
 
 
