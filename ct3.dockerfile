@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/CheetahTemplate3/cheetah3.git v${WHEEL_VERSION};
+    gpep517-build-wheel https://github.com/CheetahTemplate3/cheetah3.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
