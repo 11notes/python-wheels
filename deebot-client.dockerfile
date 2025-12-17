@@ -15,8 +15,8 @@
   # build wheels
   RUN set -ex; \
     mkdir -p /tmp/.whl; \
-    eleven git clone DeebotUniverse/client.py.git ${WHEEL_VERSION} /build; \
-    cd /build; \
+    eleven git clone DeebotUniverse/client.py.git ${WHEEL_VERSION}; \
+    cd /client.py; \
     sed -i 's|version = "0.0.0"|version = "'${WHEEL_VERSION}'"|' pyproject.toml; \
     gpep517 build-wheel \
       --wheel-dir /tmp/.whl \
