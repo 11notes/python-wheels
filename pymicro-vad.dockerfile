@@ -12,6 +12,11 @@
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG WHEEL_VERSION
 
+  # add build requirements wheel specific
+  RUN set -ex; \
+    pip install -f https://11notes.github.io/python-wheels/ \
+      pybind11;
+
   # build wheels
   RUN set -ex; \
     gpep517-build-wheel https://github.com/rhasspy/pymicro-vad.git v${WHEEL_VERSION};
