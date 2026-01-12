@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel grpcio==${WHEEL_VERSION};
+    gpep517-build-wheel https://github.com/grpc/grpc.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
