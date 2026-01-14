@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/ilanschnell/bitarray.git ${WHEEL_VERSION};
+    gpep517-build-wheel https://github.com/ilanschnell/bitarray.git ${WHEEL_VERSION}
 
 
 # ╔═════════════════════════════════════════════════════╗
