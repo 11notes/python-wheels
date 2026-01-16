@@ -12,6 +12,11 @@
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG WHEEL_VERSION
 
+    # add build requirements wheel specific
+  RUN set -ex; \
+    pip install -f https://11notes.github.io/python-wheels/ \
+      numpy;
+
   # build wheels
   RUN set -ex; \
     pip-build-wheel pandas==${WHEEL_VERSION};
