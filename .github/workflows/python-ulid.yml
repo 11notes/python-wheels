@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 12 * * *"
+    - cron: "54 12 * * *"
 
 jobs:
   python-ulid:

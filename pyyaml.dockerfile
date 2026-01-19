@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/yaml/pyyaml.git ${WHEEL_VERSION};
+    wheel-build https://github.com/yaml/pyyaml.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

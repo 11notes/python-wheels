@@ -19,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pandas==${WHEEL_VERSION};
+    wheel-build pandas ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

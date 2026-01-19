@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel reactivex==${WHEEL_VERSION};
+    wheel-build reactivex ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

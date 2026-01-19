@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pycryptodomex==${WHEEL_VERSION};
+    wheel-build pycryptodomex ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

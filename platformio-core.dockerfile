@@ -15,7 +15,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/Jason2866/platformio-core.git v${WHEEL_VERSION};
+    wheel-build https://github.com/Jason2866/platformio-core.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

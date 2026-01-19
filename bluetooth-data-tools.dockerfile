@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/Bluetooth-Devices/bluetooth-data-tools.git v${WHEEL_VERSION};
+    wheel-build https://github.com/Bluetooth-Devices/bluetooth-data-tools.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

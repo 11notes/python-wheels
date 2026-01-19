@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "24 11 * * *"
+    - cron: "42 11 * * *"
 
 jobs:
   pycares:

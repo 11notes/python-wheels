@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel gpiod==${WHEEL_VERSION};
+    wheel-build gpiod ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

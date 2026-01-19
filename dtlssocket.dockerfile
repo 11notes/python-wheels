@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel dtlssocket==${WHEEL_VERSION};
+    wheel-build dtlssocket ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

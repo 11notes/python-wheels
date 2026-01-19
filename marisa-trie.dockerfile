@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/pytries/marisa-trie.git ${WHEEL_VERSION};
+    wheel-build https://github.com/pytries/marisa-trie.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

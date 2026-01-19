@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel aiohttp==${WHEEL_VERSION};
+    wheel-build aiohttp ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

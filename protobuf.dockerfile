@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel protobuf==${WHEEL_VERSION};
+    wheel-build protobuf ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

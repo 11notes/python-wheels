@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel uv==${WHEEL_VERSION};
+    wheel-build uv ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

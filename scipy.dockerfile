@@ -20,7 +20,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel scipy==${WHEEL_VERSION};
+    wheel-build scipy ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

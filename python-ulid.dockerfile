@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel python-ulid==${WHEEL_VERSION}; \
+    wheel-build python-ulid ${WHEEL_VERSION}; \
     find /pip/wheels -name "*python_ulid*.whl" -exec cp "{}" /.dist ";"
 
 

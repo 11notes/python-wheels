@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pycrc16==${WHEEL_VERSION};
+    wheel-build pycrc16 ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

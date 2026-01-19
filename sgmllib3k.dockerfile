@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/don-makaron/sgmllib3k.git;
+    wheel-build https://github.com/don-makaron/sgmllib3k.git;
 
 
 # ╔═════════════════════════════════════════════════════╗

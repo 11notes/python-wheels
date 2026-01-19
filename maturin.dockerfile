@@ -24,7 +24,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/PyO3/maturin.git v${WHEEL_VERSION};
+    wheel-build https://github.com/PyO3/maturin.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

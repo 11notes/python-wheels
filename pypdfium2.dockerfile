@@ -24,7 +24,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pypdfium2==${WHEEL_VERSION};
+    wheel-build pypdfium2 ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

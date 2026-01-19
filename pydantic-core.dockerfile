@@ -19,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/pydantic/pydantic-core.git v${WHEEL_VERSION};
+    wheel-build https://github.com/pydantic/pydantic-core.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

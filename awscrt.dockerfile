@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel awscrt==${WHEEL_VERSION};
+    wheel-build awscrt ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

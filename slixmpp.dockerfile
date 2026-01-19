@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel slixmpp==${WHEEL_VERSION};
+    wheel-build slixmpp ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

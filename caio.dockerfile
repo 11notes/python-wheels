@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel caio==${WHEEL_VERSION};
+    wheel-build caio ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

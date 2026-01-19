@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel crcmod==${WHEEL_VERSION};
+    wheel-build crcmod ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

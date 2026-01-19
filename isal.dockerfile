@@ -19,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-     pip-build-wheel isal==${WHEEL_VERSION};
+     wheel-build isal ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

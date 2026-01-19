@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel msgpack==${WHEEL_VERSION};
+    wheel-build msgpack ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

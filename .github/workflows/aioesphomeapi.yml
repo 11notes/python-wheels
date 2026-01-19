@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "54 9 * * *"
+    - cron: "6 5 * * *"
 
 jobs:
   aioesphomeapi:

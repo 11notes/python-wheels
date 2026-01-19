@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel hatchling==${WHEEL_VERSION};
+    wheel-build hatchling ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

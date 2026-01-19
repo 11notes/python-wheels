@@ -23,7 +23,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/python-pillow/Pillow.git ${WHEEL_VERSION};
+    wheel-build https://github.com/python-pillow/Pillow.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

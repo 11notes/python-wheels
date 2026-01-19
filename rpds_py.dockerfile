@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/crate-py/rpds.git v${WHEEL_VERSION};
+    wheel-build https://github.com/crate-py/rpds.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

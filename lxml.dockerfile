@@ -20,7 +20,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/lxml/lxml.git lxml-${WHEEL_VERSION};
+    wheel-build https://github.com/lxml/lxml.git lxml-${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

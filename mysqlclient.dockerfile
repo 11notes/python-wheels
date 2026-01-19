@@ -20,7 +20,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/PyMySQL/mysqlclient.git v${WHEEL_VERSION};
+    wheel-build https://github.com/PyMySQL/mysqlclient.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

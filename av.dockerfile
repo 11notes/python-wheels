@@ -19,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/PyAV-Org/PyAV.git v${WHEEL_VERSION};
+    wheel-build https://github.com/PyAV-Org/PyAV.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

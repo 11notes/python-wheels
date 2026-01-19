@@ -19,7 +19,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/python-ldap/python-ldap.git python-ldap-${WHEEL_VERSION};
+    wheel-build https://github.com/python-ldap/python-ldap.git python-ldap-${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel numpy==${WHEEL_VERSION};
+    wheel-build numpy ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

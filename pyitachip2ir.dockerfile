@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel pyitachip2ir==${WHEEL_VERSION};
+    wheel-build pyitachip2ir ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

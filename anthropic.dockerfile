@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel anthropic==${WHEEL_VERSION};
+    wheel-build anthropic ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

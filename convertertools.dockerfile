@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    pip-build-wheel convertertools==${WHEEL_VERSION};
+    wheel-build convertertools ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

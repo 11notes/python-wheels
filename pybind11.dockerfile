@@ -20,7 +20,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/pybind/pybind11.git v${WHEEL_VERSION};
+    wheel-build https://github.com/pybind/pybind11.git v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗

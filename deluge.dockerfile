@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    gpep517-build-wheel https://github.com/deluge-torrent/deluge.git deluge-${WHEEL_VERSION};
+    wheel-build https://github.com/deluge-torrent/deluge.git deluge-${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
