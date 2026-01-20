@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "36 11 * * *"
+    - cron: "42 11 * * *"
 
 jobs:
   pybind11:

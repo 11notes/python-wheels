@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "6 13 * * *"
+    - cron: "12 13 * * *"
 
 jobs:
   pyyaml:

@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "42 12 * * *"
+    - cron: "48 12 * * *"
 
 jobs:
   pytesseract:

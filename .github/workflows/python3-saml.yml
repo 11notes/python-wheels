@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 13 * * *"
+    - cron: "6 13 * * *"
 
 jobs:
   python3-saml:
