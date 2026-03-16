@@ -194,59 +194,36 @@ jobs:
       # SHOW CONTENT
       - name: artifact / display
         run: |
-            ls -lah -af ${{ runner.temp }}/whl
+          ls -lah -af ${{ runner.temp }}/whl
 
       # CHECKOUT REPO
       - name: init / checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      # GIT PUSH ALL WHEELS AT ONCE
-      - name: git / push
-        run: |
-          git lfs install
-          git pull
-          mkdir -p ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
-          cp -af ${{ runner.temp }}/whl/. ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: add ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}"
-          git push
-
-      # CREATE RELEASE FOR WHEELS
-      - name: git / release
-        uses: softprops/action-gh-release@v1
+      # PUSH WHEELS TO R2
+      - uses: ryand56/r2-upload-action@4f4bf1b8f0b132344cefe6f69d6b8c7f6117d665 # v1.4
         with:
-          tag_name: ${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}
-          name: ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}
-          files: |
-            ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}/*
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: weur-static
+          source-dir: ${{ runner.temp }}/whl
+          destination-dir: ./python/wheels/alpine/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}
+          keep-file-fresh: true
 
       # CREATE WHEEL LINKS
       - name: html / wheel
         continue-on-error: true
         run: |
           git pull
+          mkdir -p ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           echo "" > ./index.html
           for WHL in *.whl; do
-            echo "<a href='https://github.com/11notes/python-wheels/releases/download/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./index.html
+            echo "<a href='https://pub.11notes.dev/python/wheels/alpine/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./index.html
           done
           git add ./index.html
           git commit -m "chore: update index.html"
-          git push
-
-      # GIT DELETE WHEEL FROM REPO AFTER RELEASE
-      - name: git / delete
-        run: |
-          git pull
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
-          for WHL in *.whl; do
-            git rm ${WHL}
-          done
-          git commit -m "chore: remove ${{ github.event.inputs.wheel }} ${{ github.event.inputs.version }}"
           git push
 
       # CREATE INDEX
