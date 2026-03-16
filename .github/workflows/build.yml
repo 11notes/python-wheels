@@ -208,7 +208,7 @@ jobs:
           r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           r2-bucket: pub-11notes-dev
           source-dir: ${{ runner.temp }}/whl
-          destination-dir: ./python/wheels/alpine/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}
+          destination-dir: ./python/wheels/alpine/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           keep-file-fresh: true
 
       # CREATE WHEEL LINKS
@@ -220,7 +220,7 @@ jobs:
           cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           echo "" > ./index.html
           for WHL in *.whl; do
-            echo "<a href='https://pub.11notes.dev/python/wheels/alpine/${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./index.html
+            echo "<a href='https://pub.11notes.dev/python/wheels/alpine/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./index.html
           done
           git add ./index.html
           git commit -m "chore: update index.html"
