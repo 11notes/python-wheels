@@ -75,8 +75,8 @@ jobs:
               const urls = [];
               if(files.length > 0){
                 for(const file of files){
-                  const path = file.split('/');
-                  urls.push(`<span>${path[3]} v${path[4]} <a href='https://pub.11notes.dev/${file}'>(download)</a></span>`);
+                  const wheel = file.split('/');
+                  urls.push(`<a href='https://pub.11notes.dev/${file}'>${wheel[wheel.length - 1]})</a>`);
                 }
                 writeFileSync(resolve('./docs/index.html'), `<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>python wheels for alpine linux - last updated ${new Date().toLocaleString('de-CH', {timeZone:'Europe/Zurich', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'})} CET</h1>${urls.join('<br />')}</body></html>`);
               }
