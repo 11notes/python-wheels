@@ -24,19 +24,68 @@ jobs:
       - name: init / checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
+      - name: update / setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '20'
+      - run: npm i @aws-sdk/client-s3
+
+      - name: update / compare latest with current version
+        env:
+          S3_API: ${{ secrets.R2_API }}
+          S3_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY_ID }}
+          S3_ACCESS_SECRET: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        uses: actions/github-script@62c3794a3eb6788d9a2a72b219504732c0c9a298
+        with:
+          script: |
+            const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3');
+            const { writeFileSync } = require('node:fs');
+            const { resolve } = require('node:path');
+            const client = new S3Client({
+              endpoint: process.env.S3_API,
+              credentials:{
+                accessKeyId: process.env.S3_ACCESS_KEY,
+                secretAccessKey: process.env.S3_ACCESS_SECRET
+              },
+              region:'auto',
+            });
+
+            const wheels = async(a=[], token=null) => {
+              const files = await client.send(new ListObjectsV2Command({
+                Bucket: "pub-11notes-dev",
+                Marker: "python/wheels/alpine/",
+                FetchOwner: false,
+                ContinuationToken: token,
+              }));
+              if(Array.isArray(files?.Contents)){
+                for(const file of files.Contents){
+                  if(file.Key.match(/\.whl/i)){
+                    a.push(file.Key);
+                  }
+                }
+              }
+              if(files?.IsTruncated && files?.NextContinuationToken){
+                return(await wheels(a, files.NextContinuationToken))
+              }
+              return(a);
+            }
+
+            (async () => {
+              const files = await wheels();
+              const urls = [];
+              if(files.length > 0){
+                for(const file of files){
+                  const path = file.split('/');
+                  urls.push(`<a href='https://pub.11notes.dev/${file}'>${path[3]} v${path[4]}</a>`);
+                }
+                writeFileSync(resolve('./docs/index.html'), `<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>python wheels for alpine linux - last updated ${new Date().toLocaleString('de-CH', {timeZone:'Europe/Zurich', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'})}</h1>${urls.join('')}</body></html>`);
+              }
+            })();
+
       # CREATE INDEX
       - name: html / index
         continue-on-error: true
         run: |
-          echo "<!DOCTYPE html><html><head><title>11notes/python:wheels</title></head><body><h1>python wheels for alpine linux - last updated $(date)</h1>" > ./docs/index.html
-          for WHL in ./whl/*; do
-            for VERSION in ${WHL}/*; do
-              if [ -f "${VERSION}/index.html" ]; then
-                cat "${VERSION}/index.html" >> ./docs/index.html
-              fi
-            done
-          done
-          echo "</body></html>" >> ./docs/index.html
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ./docs/index.html

@@ -211,21 +211,6 @@ jobs:
           destination-dir: ./python/wheels/alpine/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
           keep-file-fresh: true
 
-      # CREATE WHEEL LINKS
-      - name: html / wheel
-        continue-on-error: true
-        run: |
-          git pull
-          mkdir -p ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
-          cd ./whl/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
-          echo "" > ./index.html
-          for WHL in *.whl; do
-            echo "<a href='https://pub.11notes.dev/python/wheels/alpine/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}/${WHL}'>${WHL}</a><br />" >> ./index.html
-          done
-          git add ./index.html
-          git commit -m "chore: update index.html"
-          git push
-
       # CREATE INDEX
       - name: call / index.yml
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
