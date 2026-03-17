@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "18 13 * * *"
+    - cron: "24 13 * * *"
 
 jobs:
   reactivex:
