@@ -21,16 +21,18 @@ jobs:
 
     steps:
       # CHECKOUT REPO
-      - name: init / checkout
+      - name: checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: update / setup node
+      # SETUP NODE WITH DEPENDENCIES
+      - name: node / setup
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '20'
       - run: npm i @aws-sdk/client-s3
 
-      - name: update / compare latest with current version
+      # GET LIST OF ALL WHEELS STORED ON R2
+      - name: upload
         env:
           S3_API: ${{ secrets.R2_API }}
           S3_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY_ID }}
@@ -82,8 +84,8 @@ jobs:
               }
             })();
 
-      # CREATE INDEX
-      - name: html / index
+      # CREATE INDEX HTML FOR PAGES
+      - name: index.html
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
@@ -93,16 +95,16 @@ jobs:
           git push
 
       # SETUP GITHUB PAGES
-      - name: Setup Pages
+      - name: pages / setup
         uses: actions/configure-pages@v5
 
       # UPLOAD STATIC CONTENT
-      - name: Upload artifact
+      - name: pages / upload
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'docs/'
 
       # DEPLOY PAGE
-      - name: Deploy to GitHub Pages
+      - name: pages / deploy
         id: deployment
         uses: actions/deploy-pages@v4
