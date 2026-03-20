@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    wheel-build caio ${WHEEL_VERSION};
+    wheel-build https://github.com/mosquito/caio.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
