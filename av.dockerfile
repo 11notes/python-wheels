@@ -14,7 +14,7 @@
 
   # add build requirements wheel specific
   RUN set -ex; \
-    apk --no-cache --update --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community add \
+    apk --no-cache --update --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community add \
       ffmpeg7-dev;
 
   # build wheels
