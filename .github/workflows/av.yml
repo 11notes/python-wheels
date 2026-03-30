@@ -31,4 +31,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"av", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"av", "version":"${{ env.LATEST }}", "python":"3.14" }'
