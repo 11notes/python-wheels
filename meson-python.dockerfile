@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    uv pip install \
+    pip install \
       pyproject_metadata;
 
   RUN set -ex; \
