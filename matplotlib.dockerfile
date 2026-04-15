@@ -14,6 +14,11 @@
 
   # build wheels
   RUN set -ex; \
+    pip install \
+      numpy \
+      pillow;
+
+  RUN set -ex; \
     wheel-build matplotlib v${WHEEL_VERSION};
 
 
