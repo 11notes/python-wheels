@@ -20,7 +20,6 @@
     pip install -f https://11notes.github.io/python-wheels/ \
       pybind11;
 
-
   # build wheels
   RUN set -ex; \
     wheel-build https://github.com/python-pillow/Pillow.git ${WHEEL_VERSION};
