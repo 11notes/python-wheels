@@ -14,6 +14,10 @@
 
   # build wheels
   RUN set -ex; \
+    uv pip install \
+      pyproject_metadata;
+
+  RUN set -ex; \
     wheel-build https://github.com/mesonbuild/meson-python.git ${WHEEL_VERSION};
 
 
