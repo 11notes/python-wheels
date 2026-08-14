@@ -32,4 +32,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"backports_zstd", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"backports_zstd", "version":"${{ env.LATEST }}", "python":"3.13" }'
