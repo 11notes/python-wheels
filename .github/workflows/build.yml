@@ -88,7 +88,9 @@ jobs:
       # SETUP ENVIRONMENT
       - name: init / environment
         run: |
-          echo "MATRIX_PLATFORM_SANITIZED=$(echo ${{ matrix.platform }} | sed 's#/##')" >> "${GITHUB_ENV}"
+          MATRIX_PLATFORM_SANITIZED=$(echo ${{ matrix.platform }} | sed 's#/##')
+          echo "WHEEL_PATH=$(echo "./python/wheels/alpine/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}" | tr '[:upper:]' '[:lower:]')" >> "${GITHUB_ENV}"
+          echo "IMAGE_CACHE=$(echo "11notes/python-wheels:buildcache-${{ github.event.inputs.wheel }}-${{ github.event.inputs.version }}-${MATRIX_PLATFORM_SANITIZED}" | tr '[:upper:]' '[:lower:]')" >> "${GITHUB_ENV}"
 
       # SETUP QEMU
       - name: init / setup qemu
@@ -111,6 +113,8 @@ jobs:
           context: .
           file: ${{ github.event.inputs.wheel }}.dockerfile
           platforms: linux/${{ matrix.platform }}
+          cache-from: type=registry,ref=${{ env.IMAGE_CACHE }}
+          cache-to: type=registry,ref=${{ env.IMAGE_CACHE }},mode=max,compression=zstd,force-compression=true
           tags: localhost:5000/11notes/wheel:latest
           push: true
           build-args: |
@@ -137,5 +141,5 @@ jobs:
           r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           r2-bucket: pub-11notes-dev
           source-dir: ${{ runner.temp }}/whl
-          destination-dir: ./python/wheels/alpine/${{ github.event.inputs.wheel }}/${{ github.event.inputs.version }}
+          destination-dir: ${{ env.WHEEL_PATH }}
           keep-file-fresh: true
