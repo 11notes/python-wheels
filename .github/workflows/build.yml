@@ -111,97 +111,20 @@ jobs:
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
 
-      # SAVE IMAGE IN ARTIFACT CACHE
-      - name: artifact / save image
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
-          path: ${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
-          retention-days: 1
-
-
-  # ╔═════════════════════════════════════════════════════╗
-  # ║                                                     ║
-  # ║                                                     ║
-  # ║                   EXTRACT WHEEL                     ║
-  # ║                                                     ║
-  # ║                                                     ║
-  # ╚═════════════════════════════════════════════════════╝
-  extract:
-    needs: 
-      - build
-      - matrix
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
-
-    permissions:
-      contents: write
-
-    steps:
-      # SETUP ENVIRONMENT
-      - name: init / environment
+      # EXTRACT WHEEL FROM CONTAINER
+      - name: wheel / extract
         run: |
-          echo "MATRIX_PLATFORM_SANITIZED=$(echo ${{ matrix.platform }} | sed 's#/##')" >> "${GITHUB_ENV}"
           mkdir -p ${{ runner.temp }}/whl
-
-      # GET IMAGE FROM ARTIFACT CACHE
-      - name: artifact / load image
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
-          path: ${{ runner.temp }}
-
-      # EXTRACT WHEEL FROM CONTAINER IMAGE
-      - name: extract / wheel
-        run: |
-          docker load --input ${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           docker run --rm -v ${{ runner.temp }}/whl:/whl wheel
 
-      # SAVE WHEEL IN ARTIFACT
-      - name: artifact / save wheel
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.inputs.wheel }}.whl.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}
-          path: ${{ runner.temp }}/whl
-          retention-days: 1
-
-  # ╔═════════════════════════════════════════════════════╗
-  # ║                                                     ║
-  # ║                                                     ║
-  # ║                    PUSH WHEELS                      ║
-  # ║                                                     ║
-  # ║                                                     ║
-  # ╚═════════════════════════════════════════════════════╝
-  push:
-    needs: extract
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      # SAVE WHEEL IN ARTIFACT
-      - name: artifact / load wheels
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          path: ${{ runner.temp }}/whl
-          pattern: ${{ github.event.inputs.wheel }}.whl*
-          merge-multiple: true
-
-      # SHOW CONTENT
-      - name: artifact / display
+      # SHOW WHEELS
+      - name: wheel / show
         run: |
           ls -lah -af ${{ runner.temp }}/whl
 
-      # CHECKOUT REPO
-      - name: init / checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-
       # PUSH WHEELS TO R2
-      - uses: ryand56/r2-upload-action@4f4bf1b8f0b132344cefe6f69d6b8c7f6117d665 # v1.4
+      - name: wheel / upload to R2
+        uses: ryand56/r2-upload-action@4f4bf1b8f0b132344cefe6f69d6b8c7f6117d665 # v1.4
         with:
           r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
