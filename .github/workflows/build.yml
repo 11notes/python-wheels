@@ -111,7 +111,7 @@ jobs:
           context: .
           file: ${{ github.event.inputs.wheel }}.dockerfile
           platforms: linux/${{ matrix.platform }}
-          tags: localhost:5000/wheel
+          tags: localhost:5000/11notes/wheel:latest
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
@@ -120,7 +120,7 @@ jobs:
       - name: wheel / extract
         run: |
           mkdir -p ${{ runner.temp }}/whl
-          docker run --rm -v ${{ runner.temp }}/whl:/whl localhost:5000/wheel
+          docker run --rm -v ${{ runner.temp }}/whl:/whl 11notes/wheel:latest
 
       # SHOW WHEELS
       - name: wheel / show
