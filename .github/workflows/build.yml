@@ -112,7 +112,6 @@ jobs:
           file: ${{ github.event.inputs.wheel }}.dockerfile
           platforms: linux/${{ matrix.platform }}
           tags: localhost:5000/wheel
-          outputs: type=docker,dest=${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
