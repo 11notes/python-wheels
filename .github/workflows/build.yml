@@ -39,12 +39,6 @@ jobs:
     outputs:
       stringify: ${{ steps.setup-matrix.outputs.stringify }}
 
-    services:
-      registry:
-        image: registry:2
-        ports:
-          - 5000:5000
-
     steps:
       - name: matrix / setup list
         id: setup-matrix
@@ -79,6 +73,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix: ${{ fromJSON(needs.matrix.outputs.stringify) }}
+
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
 
     steps:
       # CHECKOUT REPO
