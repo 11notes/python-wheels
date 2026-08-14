@@ -39,6 +39,12 @@ jobs:
     outputs:
       stringify: ${{ steps.setup-matrix.outputs.stringify }}
 
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+
     steps:
       - name: matrix / setup list
         id: setup-matrix
@@ -105,7 +111,7 @@ jobs:
           context: .
           file: ${{ github.event.inputs.wheel }}.dockerfile
           platforms: linux/${{ matrix.platform }}
-          tags: wheel
+          tags: localhost:5000/wheel
           outputs: type=docker,dest=${{ runner.temp }}/${{ github.event.inputs.wheel }}.${{ matrix.python }}.${{ env.MATRIX_PLATFORM_SANITIZED }}.tar
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
@@ -115,7 +121,7 @@ jobs:
       - name: wheel / extract
         run: |
           mkdir -p ${{ runner.temp }}/whl
-          docker run --rm -v ${{ runner.temp }}/whl:/whl wheel
+          docker run --rm -v ${{ runner.temp }}/whl:/whl localhost:5000/wheel
 
       # SHOW WHEELS
       - name: wheel / show
