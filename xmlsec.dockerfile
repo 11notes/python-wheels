@@ -27,7 +27,7 @@
     apk --no-cache --update add \
       libxml2-dev \
 	    xmlsec-dev; \
-    pip install -f https://11notes.github.io/python-wheels/ \
+    uv pip install \
       lxml;
 
   # get source of package

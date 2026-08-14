@@ -17,7 +17,7 @@
     apk --no-cache --update add \
       zlib-dev \
       libjpeg-turbo-dev; \
-    pip install -f https://11notes.github.io/python-wheels/ \
+    uv pip install \
       pybind11;
 
   # build wheels

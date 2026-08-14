@@ -14,7 +14,7 @@
 
     # add build requirements wheel specific
   RUN set -ex; \
-    pip install -f https://11notes.github.io/python-wheels/ \
+    uv pip install \
       numpy;
 
   # build wheels

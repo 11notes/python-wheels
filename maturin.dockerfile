@@ -19,7 +19,7 @@
       dbus-dev \
       cargo-nextest \
       libffi-dev; \
-    pip install -f https://11notes.github.io/python-wheels/ \
+    uv pip install \
       cffi;
 
   # build wheels
