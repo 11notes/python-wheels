@@ -112,6 +112,7 @@ jobs:
           file: ${{ github.event.inputs.wheel }}.dockerfile
           platforms: linux/${{ matrix.platform }}
           tags: localhost:5000/11notes/wheel:latest
+          push: true
           build-args: |
             PYTHON_VERSION=${{ matrix.python }}
             WHEEL_VERSION=${{ github.event.inputs.version }}
