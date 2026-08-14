@@ -81,6 +81,13 @@ jobs:
           - 5000:5000
 
     steps:
+      # DOCKER HUB
+      - name: docker / login to hub
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        with:
+          username: 11notes
+          password: ${{ secrets.DOCKER_TOKEN }}
+
       # CHECKOUT REPO
       - name: init / checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
