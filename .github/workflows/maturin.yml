@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "48 9 * * *"
+    - cron: "54 9 * * *"
 
 jobs:
   maturin:

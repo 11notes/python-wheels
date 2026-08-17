@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "48 12 * * *"
+    - cron: "54 12 * * *"
 
 jobs:
   pynacl:

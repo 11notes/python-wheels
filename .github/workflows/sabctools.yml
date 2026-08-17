@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "0 14 * * *"
+    - cron: "6 14 * * *"
 
 jobs:
   sabctools:

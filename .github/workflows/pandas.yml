@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "54 10 * * *"
+    - cron: "0 11 * * *"
 
 jobs:
   pandas:

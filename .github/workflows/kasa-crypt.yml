@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "12 9 * * *"
+    - cron: "18 9 * * *"
 
 jobs:
   kasa-crypt:

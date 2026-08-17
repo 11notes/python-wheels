@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "30 14 * * *"
+    - cron: "36 14 * * *"
 
 jobs:
   ultrajson:
