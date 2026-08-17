@@ -15,7 +15,7 @@
   # build wheels
   RUN set -ex; \
     uv pip install \
-      mesonpy;
+      meson-python;
 
   RUN set -ex; \
     wheel-build https://github.com/faust-streaming/cChardet.git v${WHEEL_VERSION};
