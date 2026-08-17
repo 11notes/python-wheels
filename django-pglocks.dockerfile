@@ -14,6 +14,10 @@
 
   # build wheels
   RUN set -ex; \
+    uv pip install \
+      hatchling;
+
+  RUN set -ex; \
     wheel-build https://github.com/Xof/django-pglocks.git;
 
 
