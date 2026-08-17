@@ -16,7 +16,7 @@
   RUN set -ex; \
     eleven git clone https://github.com/fastuuid/fastuuid.git ${WHEEL_VERSION}; \
     cd /fastuuid; \
-    sed i "s|use uuid::{Builder, Context, Timestamp, Uuid, Variant, Version};|use uuid::{Builder, ContextV1, Timestamp, Uuid, Variant, Version};|" ./src/lib.rs; \
+    sed -i "s|use uuid::{Builder, Context, Timestamp, Uuid, Variant, Version};|use uuid::{Builder, ContextV1, Timestamp, Uuid, Variant, Version};|" ./src/lib.rs; \
     wheel-build-git ${WHEEL_VERSION};
 
 
