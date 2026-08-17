@@ -11,15 +11,17 @@
 # :: WHEEL
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG WHEEL_VERSION
+  ENV CYTHONIZE=1
 
   # add build requirements wheel specific
   RUN set -ex; \
     apk --no-cache --update --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community add \
-      ffmpeg7-dev;
+      ffmpeg-dev=~8 \
+      ffmpeg=~8;
 
   # build wheels
   RUN set -ex; \
-    wheel-build https://github.com/PyAV-Org/PyAV.git v${WHEEL_VERSION};
+    wheel-build https://github.com/PyAV-Org/PyAV.git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
