@@ -22,7 +22,7 @@ jobs:
 
       - name: udpate / call update workflow
         if: env.LATEST != 'null' && env.LATEST != ''
-        uses: benc-uk/workflow-dispatch@7a027648b88c2413826b6ddd6c76114894dc5ec4 #v1.3.1 # v4.0.0
+        uses: benc-uk/workflow-dispatch@7a027648b88c2413826b6ddd6c76114894dc5ec4 # v1.3.1 # v4.0.0
         with:
           wait-for-completion: false
           workflow: update.yml
