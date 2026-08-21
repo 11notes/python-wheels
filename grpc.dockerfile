@@ -14,7 +14,7 @@
 
   # build wheels
   RUN set -ex; \
-    wheel-build https://github.com/grpc/grpc.git v${WHEEL_VERSION};
+    wheel-build grpcio v${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
