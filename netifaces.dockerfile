@@ -15,6 +15,7 @@
   # build wheels
   RUN set -ex; \
     git clone --recurse-submodules https://github.com/al45tair/netifaces.git -b release_0_11_0 /build; \
+    sleep $((RANDOM % 11)); \
     cd /build; \
     wget https://gitlab.alpinelinux.org/alpine/aports/-/raw/master/community/py3-netifaces/gcc14.patch; \
     git apply gcc14.patch; \
