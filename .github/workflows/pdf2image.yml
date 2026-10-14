@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "6 11 * * *"
+    - cron: "49 11 * * *"
 
 jobs:
   pdf2image:

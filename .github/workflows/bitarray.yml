@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "6 6 * * *"
+    - cron: "14 6 * * *"
 
 jobs:
   bitarray:

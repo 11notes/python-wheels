@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "12 5 * * *"
+    - cron: "14 5 * * *"
 
 jobs:
   aiohttp:

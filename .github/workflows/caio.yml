@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "42 6 * * *"
+    - cron: "56 6 * * *"
 
 jobs:
   caio:

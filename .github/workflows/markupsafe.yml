@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "42 9 * * *"
+    - cron: "14 10 * * *"
 
 jobs:
   markupsafe:

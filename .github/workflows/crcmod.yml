@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "6 7 * * *"
+    - cron: "21 7 * * *"
 
 jobs:
   crcmod:

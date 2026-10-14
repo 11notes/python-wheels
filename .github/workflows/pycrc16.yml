@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "18 12 * * *"
+    - cron: "7 13 * * *"
 
 jobs:
   pycrc16:
