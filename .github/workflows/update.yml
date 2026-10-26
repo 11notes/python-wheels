@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: exists
         run: |
-          if ! curl -s "https://11notes.github.io/python-wheels/" | grep -q "https://pub.11notes.dev/python/wheels/alpine/${{ inputs.wheel }}/${{ inputs.version }}/"; then
+          if ! curl -s "https://wheels.11notes.dev/${{ inputs.wheel }}/" | grep -q "https://pub.11notes.dev/python/wheels/alpine/${{ inputs.wheel }}/${{ inputs.version }}/"; then
             echo "EXISTS=false" >> "${GITHUB_ENV}"
             echo "${{ inputs.wheel }}/${{ inputs.version }} does not exist"
           fi
