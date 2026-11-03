@@ -12,11 +12,6 @@
   FROM 11notes/python:wheel-${PYTHON_VERSION} AS build
   ARG WHEEL_VERSION
 
-  # add build requirements wheel specific
-  RUN set -ex; \
-    uv pip install \
-      pybind11;
-
   # build wheels
   RUN set -ex; \
     wheel-build https://github.com/Bluetooth-Devices/bleak-smlight.git v${WHEEL_VERSION};
