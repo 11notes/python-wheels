@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: matrix / setup list
         id: setup-matrix
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const platforms = "${{ github.event.inputs.platform }}".split(",");
@@ -109,13 +109,13 @@ jobs:
 
       # SETUP BUILDX BUILDER WITH USING LOCAL REGISTRY TO STORE IMAGE
       - name: init / setup buildx
-        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
         with:
           driver-opts: network=host
 
       # BUILD WHEEL INSIDE CONTAINER
       - name: wheel / build
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           file: ${{ github.event.inputs.wheel }}.dockerfile
@@ -141,7 +141,7 @@ jobs:
 
       # PUSH WHEELS TO R2
       - name: wheel / upload to R2
-        uses: ryand56/r2-upload-action@4f4bf1b8f0b132344cefe6f69d6b8c7f6117d665 # v1.4
+        uses: ryand56/r2-upload-action@33ebb7a494b3a8a3c5ed2ea6bbdc72e707090317 # v1.5.0
         with:
           r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
