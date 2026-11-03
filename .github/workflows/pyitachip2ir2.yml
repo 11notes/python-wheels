@@ -1,0 +1,30 @@
+name: pyitachip2ir2
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "set semver for build"
+        type: string
+        required: false
+        default: "null"
+  schedule:
+    - cron: "21 15 * * *"
+
+jobs:
+  pyitachip2ir2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: udpate / get latest version
+        run: |
+          echo "LATEST=latest" >> "${GITHUB_ENV}"
+
+      - name: udpate / call update workflow
+        if: env.LATEST != 'null' && env.LATEST != ''
+        uses: benc-uk/workflow-dispatch@d004979be141727c7a17c28f603e2facc40d0855 # v1.3.3
+        with:
+          wait-for-completion: false
+          workflow: update.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "wheel":"pyitachip2ir2", "version":"${{ env.LATEST }}" }'
