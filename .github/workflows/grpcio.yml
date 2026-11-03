@@ -1,5 +1,5 @@
-name: grpc
-run-name: grpc ${{ inputs.version }}
+name: grpcio
+run-name: grpcio ${{ inputs.version }}
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
     - cron: "0 9 * * *"
 
 jobs:
-  grpc:
+  grpcio:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,4 +32,4 @@ jobs:
           wait-for-completion: false
           workflow: update.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
-          inputs: '{ "wheel":"grpc", "version":"${{ env.LATEST }}" }'
+          inputs: '{ "wheel":"grpcio", "version":"${{ env.LATEST }}" }'
