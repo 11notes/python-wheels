@@ -14,7 +14,8 @@
 
   # build wheels
   RUN set -ex; \
-    wheel-build https://github.com/zhuyifei1999/guppy3.git v${WHEEL_VERSION};
+    #wheel-build https://github.com/zhuyifei1999/guppy3.git v${WHEEL_VERSION};
+    wheel-build https://github.com/zhuyifei1999/guppy3.git;
 
 
 # ╔═════════════════════════════════════════════════════╗
