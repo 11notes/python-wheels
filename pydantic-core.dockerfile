@@ -15,7 +15,8 @@
   # add build requirements wheel specific
   RUN set -ex; \
     uv pip install \
-      typing-extensions;
+      typing-extensions \
+      hatchling;
 
   # build wheels
   RUN set -ex; \
