@@ -19,7 +19,8 @@
 
   # build wheels
   RUN set -ex; \
-    wheel-build https://github.com/pydantic/pydantic-core.git v${WHEEL_VERSION};
+    git clone https://github.com/pydantic/pydantic.git -b core-v${WHEEL_VERSION}; \
+    wheel-build-git ${WHEEL_VERSION};
 
 
 # ╔═════════════════════════════════════════════════════╗
