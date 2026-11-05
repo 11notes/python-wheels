@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "49 7 * * *"
+    - cron: "56 7 * * *"
 
 jobs:
   deebot-client:

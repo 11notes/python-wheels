@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "49 12 * * *"
+    - cron: "14 13 * * *"
 
 jobs:
   pyads:

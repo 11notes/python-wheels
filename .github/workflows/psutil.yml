@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "21 12 * * *"
+    - cron: "35 12 * * *"
 
 jobs:
   psutil:

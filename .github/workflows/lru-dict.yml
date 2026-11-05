@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "56 9 * * *"
+    - cron: "7 10 * * *"
 
 jobs:
   lru-dict:

@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "56 15 * * *"
+    - cron: "28 16 * * *"
 
 jobs:
   watchdog:

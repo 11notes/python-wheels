@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "28 8 * * *"
+    - cron: "42 8 * * *"
 
 jobs:
   fastuuid:

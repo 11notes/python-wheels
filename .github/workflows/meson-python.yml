@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "35 10 * * *"
+    - cron: "49 10 * * *"
 
 jobs:
   meson-python:

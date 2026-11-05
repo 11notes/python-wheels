@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "35 8 * * *"
+    - cron: "49 8 * * *"
 
 jobs:
   faust-cchardet:

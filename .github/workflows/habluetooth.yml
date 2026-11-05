@@ -9,7 +9,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "14 9 * * *"
+    - cron: "28 9 * * *"
 
 jobs:
   habluetooth:

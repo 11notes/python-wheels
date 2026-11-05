@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "21 8 * * *"
+    - cron: "28 8 * * *"
 
 jobs:
   epaper-dithering:

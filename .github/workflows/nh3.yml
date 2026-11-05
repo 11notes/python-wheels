@@ -10,7 +10,7 @@ on:
         required: false
         default: "null"
   schedule:
-    - cron: "7 11 * * *"
+    - cron: "21 11 * * *"
 
 jobs:
   nh3:
