@@ -19,7 +19,7 @@
 
   # build wheel
   RUN set -ex; \
-    eleven git clone https://github.com/psycopg/psycopg.git ${WHEEL_VERSION}; \
+    eleven git clone https://github.com/psycopg/psycopg.git pool-${WHEEL_VERSION}; \
     wheel-build /psycopg/psycopg_pool;
 
 
