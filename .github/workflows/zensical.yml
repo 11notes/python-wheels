@@ -1,0 +1,35 @@
+name: zensical
+run-name: zensical ${{ inputs.version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "set semver for build"
+        type: string
+        required: false
+        default: "null"
+  schedule:
+    - cron: "49 15 * * *"
+
+jobs:
+  zensical:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: udpate / get latest version
+        run: |
+          if [ "${{ github.event.inputs.version }}" != "null" ] && [ "${{ github.event.inputs.version }}" != "" ]; then
+            echo "LATEST=${{ github.event.inputs.version }}" >> "${GITHUB_ENV}"
+          else
+            echo "LATEST=$(curl -s https://api.github.com/repos/zensical/zensical/releases/latest | jq -r '.tag_name' | sed 's|v||')" >> "${GITHUB_ENV}"
+          fi
+
+      - name: udpate / call update workflow
+        if: env.LATEST != 'null' && env.LATEST != ''
+        uses: benc-uk/workflow-dispatch@d004979be141727c7a17c28f603e2facc40d0855 # v1.3.3
+        with:
+          wait-for-completion: false
+          workflow: update.yml
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "wheel":"zensical", "version":"${{ env.LATEST }}" }'
